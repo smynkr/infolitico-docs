@@ -16,7 +16,7 @@ rejection is a normal, deliberate outcome.
     { title: "Faith-angle judgment", description: "The theme extractor decides whether the event has a natural faith/values angle at all." },
     { title: "Verse selection", description: "A deterministic hash of the event picks one curated NLT verse — same event, same verse." },
     { title: "Outline and draft", description: "Structure the arc, then write the 300–500 word article with reflection and prayer." },
-    { title: "Guard and review", description: "Content gates, headline novelty, and person checks run before anything can publish." },
+    { title: "Guard and review", description: "Database-owned protected-content evaluation, content gates, headline novelty, and person checks run before anything can publish." },
     { title: "Publish", description: "The image gate clears and the story goes live on the site and newsletter." },
   ]}
 />
@@ -61,9 +61,21 @@ invented.
 
 ### Guard and review
 
-The `polish-and-guard` stage is the last-line content gate. Editorial review,
-headline-novelty checks, and a pre-publish person check run next. The image
-gate clears, and the story publishes.
+The `polish-and-guard` stage is the last-line content gate. A database-owned
+protected-content evaluation runs both before any LLM work begins and again
+after the article is drafted — if a story matches a protected-content rule,
+it is rejected before publish. Editorial review, headline-novelty checks, and
+a pre-publish person check run next. The image gate clears, and the story
+publishes.
+
+## Editorial accountability
+
+If a published story is later found to violate a standard or contain an
+error, it can be retracted or corrected through an append-only
+editorial-action ledger. Retracted stories show a public notice at their
+original URL; corrected stories display a correction notice above the
+article. See [editorial standards](/infolitico/editorial-standards) for
+details.
 
 ## Determinism and safety by design
 
@@ -72,8 +84,9 @@ gate clears, and the story publishes.
 - Scripture text is reproduced exactly from the curated database; the
   pipeline never fabricates or modifies a verse (see
   [editorial standards](/infolitico/editorial-standards)).
-- Verified data (verses, commentary quotes, protected-person policy) is
-  attached in code between stages, never trusted to a model's own output.
+- Verified data (verses, commentary quotes, protected-content rules) is
+  enforced in code and database policy between stages, never trusted to a
+  model's own output.
 - Every story must clear the guards before publication; a story that fails a
   gate is rejected, not repaired by prompt.
 
