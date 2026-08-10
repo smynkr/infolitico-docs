@@ -1,0 +1,92 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Axiomancer Labs",
+  "description": "Infolitico documentation \u2014 how the fully autonomous faith-framed news site works.",
+  "colors": {
+    "primary": "#00D4FF",
+    "light": "#5DE5FF",
+    "dark": "#0099BF"
+  },
+  "favicon": "/images/favicon.svg",
+  "logo": {
+    "light": "/images/logo-light.svg",
+    "dark": "/images/logo-dark.svg",
+    "href": "https://axiomancer.io"
+  },
+  "navigation": {
+    "products": [
+      {
+        "product": "Infolitico",
+        "description": "Fully autonomous faith-framed news \u2014 accurate reporting connected to Scripture, reflection, and prayer.",
+        "icon": "flame",
+        "tabs": [
+          {
+            "tab": "Documentation",
+            "groups": [
+              {
+                "group": "Get started",
+                "icon": "rocket",
+                "pages": [
+                  "infolitico/index",
+                  "infolitico/getting-started"
+                ]
+              },
+              {
+                "group": "Product",
+                "icon": "workflow",
+                "pages": [
+                  "infolitico/how-it-works",
+                  "infolitico/editorial-standards",
+                  "infolitico/content-sources"
+                ]
+              },
+              {
+                "group": "Reader",
+                "icon": "mail",
+                "pages": [
+                  "infolitico/newsletter",
+                  "infolitico/faq"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": []
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Infolitico",
+        "href": "https://infolitico.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Sign in",
+      "href": "https://app.axiomlayer.io"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/axiomancer",
+      "github": "https://github.com/smynkr",
+      "linkedin": "https://www.linkedin.com/company/axiomancer"
+    }
+  },
+  "seo": {
+    "indexing": "navigable"
+  },
+  "integrations": {
+    "intercom": {
+      "appId": "okr3tqrw"
+    }
+  },
+  "interaction": {
+    "drilldown": true
+  }
+}
