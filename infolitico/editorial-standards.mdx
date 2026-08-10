@@ -1,6 +1,6 @@
 ---
 title: "Editorial standards"
-description: "The hard rules Infolitico enforces: accurate reporting, exact Scripture text, no fabricated quotes, and protected-person policy — enforced in code, not prompts."
+description: "The hard rules Infolitico enforces: accurate reporting, exact Scripture text, no fabricated quotes, protected-people and minors policy, and public editorial accountability — enforced in code, not prompts."
 ---
 
 Infolitico's editorial standards are not style guidelines — they are enforced
@@ -27,15 +27,40 @@ At most one quote may appear in an article, verbatim and attributed.
 ### 3. Protected people and minors are database-owned policy
 
 Policy about protected people and minors is enforced by the database and the
-pipeline's code, not by asking a model to "remember the rules." A pre-publish
-person check runs before any story can publish.
+pipeline's code, not by asking a model to "remember the rules." A
+database-owned ruleset checks every story against minors-centered vocabulary
+and age expressions — before any LLM work begins and again after the article
+is drafted, immediately before publish. An evaluation error or an empty
+ruleset fails the operation rather than being treated as a clear result. A
+pre-publish person check also runs before any story can publish.
+
+The rules cover unambiguous minors vocabulary (child, children, teen,
+schoolchild, infant, toddler, and similar terms), bounded youth-program
+language, and explicit under-18 and age-expression forms. They deliberately
+omit broad terms like bare "minor," "youth," "school," or "student" so
+ordinary adult reporting is not rejected. Rules live in the database so
+policy maintenance does not require weakening a code guard.
 
 ### 4. The last-line content gate
 
 `polish-and-guard` is the final content gate before publication. Combined
-with editorial review, headline-novelty checks, and the pre-publish person
-check, a story must clear every gate or it is rejected — never patched by
-prompt.
+with editorial review, headline-novelty checks, the protected-content
+evaluation, and the pre-publish person check, a story must clear every gate
+or it is rejected — never patched by prompt.
+
+### 5. Editorial accountability: retractions and corrections
+
+When a published story is later found to violate a standard or contain an
+error, Infolitico uses an append-only editorial-action ledger. Every
+retraction and correction is version-checked, idempotent, and recorded with
+a public notice.
+
+- **Retracted stories** show a "This story is no longer available" notice at
+  their original URL instead of disappearing silently.
+- **Corrected stories** display a correction notice above the article.
+- Internal details (operator references, request hashes, reason codes) are
+  never exposed publicly; only the action kind, public notice, and timestamp
+  are shown to readers.
 
 ## News first, faith second
 
