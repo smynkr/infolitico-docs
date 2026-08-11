@@ -1,10 +1,10 @@
 ---
-title: MenuWright Docs wiki
+title: Infolitico Docs wiki
 category: index
-updated: 2026-08-10
+updated: 2026-08-11
 ---
 
-# MenuWright Docs wiki
+# Infolitico Docs wiki
 
 This wiki is the durable project memory for `infolitico-docs`. Read the
 generated `docs/AGENT_SOT.md` first, then use the pages below for the task at
@@ -22,5 +22,6 @@ only `group_id=infolitico-docs` and never override the wiki.
 
 | Page | What it answers |
 |---|---|
+| [[_schema]] | Wiki schema, routing, and capture contract |
 | [[current-state]] | Current repository-owned topology and content boundary |
 | [[ledger]] | Dated durable facts and their source anchors |
