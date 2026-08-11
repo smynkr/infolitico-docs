@@ -26,7 +26,9 @@ const config = {
       // Clean standalone URLs: docs.infolitico.com/<page> serves the
       // /infolitico/<page> route. The canonical source keeps its product
       // prefix; the rewrite keeps the pretty URL in the address bar.
-      { source: '/', destination: '/infolitico' },
+      // `/` itself is NOT rewritten — app/(home)/page.tsx renders the
+      // product index there (a rewrite-only `/` 404s on soft navigation,
+      // because the client router does not apply rewrites).
       { source: '/getting-started', destination: '/infolitico/getting-started' },
       { source: '/how-it-works', destination: '/infolitico/how-it-works' },
       { source: '/editorial-standards', destination: '/infolitico/editorial-standards' },
