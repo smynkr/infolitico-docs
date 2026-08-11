@@ -1,25 +1,20 @@
 import { ImageResponse } from 'next/og';
-import { PRODUCTS } from '@/components/brand/products';
 
-export const alt = 'Axiomancer Docs — the physical world, quantified';
+export const alt = 'Infolitico — an autonomous newsroom, start to finish';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
+// The flame brand mark (public/logo.svg), inlined as a data URI so satori
+// renders the real mark without raster assets.
+const MARK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none"><path d="M32 6 C24 15 14 24 14 36 a18 18 0 0 0 36 0 C50 24 40 15 32 6 Z" fill="#C2566B"/><path d="M32 20 C27 26 22 31 22 38 a10 10 0 0 0 20 0 C42 31 37 26 32 20 Z" fill="#E8A4B1"/></svg>`;
+const MARK_URI = `data:image/svg+xml;base64,${Buffer.from(MARK_SVG).toString('base64')}`;
+
 /**
- * Branded homepage Open Graph image. The void, the signal, the product
- * accents — rendered as a static survey card. Accents derive from the single
- * product-identity source so the card can never drift from the hub.
+ * Branded homepage Open Graph image. The void, the signal, the flame mark —
+ * rendered as a static card in the Infolitico identity: near-black field,
+ * one deliberate point of warm burgundy light.
  */
 export default function Image() {
-  const accents = PRODUCTS.map((product) => product.accent);
-
-  // Deterministic star field for the constellation backdrop
-  const stars = Array.from({ length: 40 }, (_, i) => ({
-    x: ((i * 137.5) % 1200),
-    y: ((i * 89.7) % 630),
-    r: (i % 3) + 1,
-  }));
-
   return new ImageResponse(
     (
       <div
@@ -29,118 +24,89 @@ export default function Image() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          background: '#0A0A0A',
+          background: '#0A0A0F',
           position: 'relative',
           fontFamily: 'sans-serif',
         }}
       >
-        {/* Ambient glow */}
+        {/* Ambient burgundy glow — the point of light in the void. */}
         <div
           style={{
             position: 'absolute',
-            top: -150,
+            top: -180,
             left: '50%',
-            width: 900,
-            height: 500,
+            width: 1000,
+            height: 560,
             transform: 'translateX(-50%)',
-            background: 'radial-gradient(ellipse, rgba(0,212,255,0.14), transparent 65%)',
+            background: 'radial-gradient(ellipse, rgba(194,86,107,0.15), transparent 65%)',
             display: 'flex',
           }}
         />
-        {/* Constellation stars */}
-        {stars.map((s, i) => (
-          <div
-            key={i}
-            style={{
-              position: 'absolute',
-              left: s.x,
-              top: s.y,
-              width: s.r * 2,
-              height: s.r * 2,
-              borderRadius: '50%',
-              background: 'rgba(0,212,255,0.35)',
-              display: 'flex',
-            }}
-          />
-        ))}
 
         <div style={{ display: 'flex', flexDirection: 'column', padding: '0 90px' }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              marginBottom: 28,
-            }}
-          >
+          <img
+            src={MARK_URI}
+            width={96}
+            height={96}
+            style={{ marginBottom: 32, borderRadius: 20 }}
+            alt=""
+          />
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 30 }}>
             <div
               style={{
                 width: 10,
                 height: 10,
-                borderRadius: '50%',
-                background: '#00D4FF',
+                borderRadius: 2,
+                background: '#C2566B',
                 display: 'flex',
               }}
             />
             <span
               style={{
-                color: '#00D4FF',
+                color: '#C2566B',
                 fontSize: 22,
                 fontWeight: 600,
                 letterSpacing: 6,
                 textTransform: 'uppercase',
               }}
             >
-              Axiomancer Docs
+              Infolitico
             </span>
           </div>
 
           <div
             style={{
-              fontSize: 88,
+              fontSize: 84,
               fontWeight: 600,
               lineHeight: 1.05,
               letterSpacing: -2,
               color: '#FFFFFF',
             }}
           >
-            The physical world,
+            An autonomous newsroom,
           </div>
           <div
             style={{
-              fontSize: 88,
+              fontSize: 84,
               fontWeight: 600,
               lineHeight: 1.05,
               letterSpacing: -2,
-              color: '#00D4FF',
+              color: '#C2566B',
             }}
           >
-            quantified.
+            start to finish.
           </div>
 
           <div
             style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: 14,
-              marginTop: 44,
+              marginTop: 40,
+              color: '#8F8F8F',
+              fontSize: 26,
             }}
           >
-            {accents.map((c) => (
-              <div
-                key={c}
-                style={{
-                  width: 14,
-                  height: 14,
-                  borderRadius: '50%',
-                  background: c,
-                  display: 'flex',
-                }}
-              />
-            ))}
-            <span style={{ color: '#888888', fontSize: 24, marginLeft: 8 }}>
-              Layer · Overwatch · Locus · Codex · RouteShift · Invest
-            </span>
+            Research, writing, and publication — zero manual steps, every edition
           </div>
         </div>
       </div>

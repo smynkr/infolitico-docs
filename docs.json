@@ -1,18 +1,18 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Axiomancer Labs",
+  "name": "Infolitico",
   "description": "Infolitico documentation \u2014 how the fully autonomous faith-framed news site works.",
   "colors": {
-    "primary": "#00D4FF",
-    "light": "#5DE5FF",
-    "dark": "#0099BF"
+    "primary": "#5E0F1C",
+    "light": "#C2566B",
+    "dark": "#5E0F1C"
   },
   "favicon": "/images/favicon.svg",
   "logo": {
     "light": "/images/logo-light.svg",
     "dark": "/images/logo-dark.svg",
-    "href": "https://axiomancer.io"
+    "href": "https://infolitico.com"
   },
   "navigation": {
     "products": [
@@ -64,12 +64,7 @@
         "label": "Infolitico",
         "href": "https://infolitico.com"
       }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Sign in",
-      "href": "https://app.axiomlayer.io"
-    }
+    ]
   },
   "footer": {
     "socials": {
