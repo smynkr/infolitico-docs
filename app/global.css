@@ -3,16 +3,16 @@
 @import 'fumadocs-ui/css/preset.css';
 
 /* ---------------------------------------------------------------------------
- * Axiomancer brand theme
+ * Infolitico brand theme
  *
- * The brand is "a sky-survey instrument": a near-black void with single,
- * deliberate points of light. Cyan (#00D4FF) is the signal — the one
- * interaction color. Each product carries its own accent for identity.
+ * The brand is a quiet, deliberate voice in the dark: a near-black void with
+ * a single point of warm light. Burgundy (#5E0F1C) is the signal — the one
+ * interaction color, lifted in the void so links stay legible.
  *
  * Palette (from DESIGN.md):
- *   void #0A0A0A · surface #111111 · elevated #1A1A1A
- *   border-subtle #222222 · border-strong #3A3A3A
- *   signal cyan #00D4FF · gold #C9A227 · mist #4A9E8E
+ *   void #0A0A0F · surface #111114 · elevated #141418
+ *   border-subtle #222226 · border-strong #3A3A3E
+ *   signal burgundy #5E0F1C · void-light #C2566B
  *   products: overwatch #E5A836 · locus #6366F1 · codex #D4A574
  *             layer #F472B6 · drift #34D399
  * ------------------------------------------------------------------------- */
@@ -24,14 +24,9 @@
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Product accent palette, exposed as Tailwind colors */
-  --color-ax-signal: #00d4ff;
-  --color-ax-gold: #c9a227;
-  --color-ax-mist: #4a9e8e;
-  --color-ax-overwatch: #e5a836;
-  --color-ax-locus: #6366f1;
-  --color-ax-codex: #d4a574;
-  --color-ax-layer: #f472b6;
-  --color-ax-drift: #34d399;
+  --color-tt-accent: #5e0f1c;
+  --color-tt-accent-light: #c2566b;
+  --color-tt-accent-dark: #4a0b15;
 }
 
 html {
@@ -44,7 +39,7 @@ html > body[data-scroll-locked] {
 }
 
 /* ---------------------------------------------------------------------------
- * Light theme — paper, but still Axiom. Cyan darkens for contrast.
+ * Light theme — paper, but still Infolitico. Burgundy darkens for contrast.
  * (Declared before .dark so the dark void wins when .dark is present —
  *  both selectors have equal specificity, so source order decides.)
  * ------------------------------------------------------------------------- */
@@ -58,13 +53,13 @@ html > body[data-scroll-locked] {
   --color-fd-card: #f4f4f5;
   --color-fd-card-foreground: #161616;
   --color-fd-border: #e2e2e4;
-  --color-fd-primary: #0099bf;
+  --color-fd-primary: #5e0f1c;
   --color-fd-primary-foreground: #ffffff;
   --color-fd-secondary: #ececee;
   --color-fd-secondary-foreground: #161616;
-  --color-fd-accent: rgba(0, 153, 191, 0.1);
-  --color-fd-accent-foreground: #007a99;
-  --color-fd-ring: #0099bf;
+  --color-fd-accent: rgba(94, 15, 28, 0.1);
+  --color-fd-accent-foreground: #4a0b15;
+  --color-fd-ring: #5e0f1c;
   --color-fd-overlay: rgba(0, 0, 0, 0.25);
 }
 
@@ -72,22 +67,22 @@ html > body[data-scroll-locked] {
  * Dark theme — the void. This is the brand at home.
  * ------------------------------------------------------------------------- */
 .dark {
-  --color-fd-background: #0a0a0a;
+  --color-fd-background: #0a0a0f;
   --color-fd-foreground: #e8e8e8;
-  --color-fd-muted: #111111;
+  --color-fd-muted: #111114;
   --color-fd-muted-foreground: #8f8f8f;
-  --color-fd-popover: #141414;
+  --color-fd-popover: #141418;
   --color-fd-popover-foreground: #e0e0e0;
-  --color-fd-card: #111111;
+  --color-fd-card: #111114;
   --color-fd-card-foreground: #f2f2f2;
-  --color-fd-border: #232323;
-  --color-fd-primary: #00d4ff;
-  --color-fd-primary-foreground: #04141a;
-  --color-fd-secondary: #161616;
+  --color-fd-border: #232327;
+  --color-fd-primary: #c2566b;
+  --color-fd-primary-foreground: #fff7f8;
+  --color-fd-secondary: #16161a;
   --color-fd-secondary-foreground: #e8e8e8;
-  --color-fd-accent: rgba(0, 212, 255, 0.12);
-  --color-fd-accent-foreground: #7fe7ff;
-  --color-fd-ring: #00d4ff;
+  --color-fd-accent: rgba(194, 86, 107, 0.14);
+  --color-fd-accent-foreground: #e8a4b1;
+  --color-fd-ring: #c2566b;
   --color-fd-overlay: rgba(0, 0, 0, 0.6);
 }
 
@@ -141,7 +136,7 @@ html > body[data-scroll-locked] {
 
 /* Heading self-anchors are NOT links. Fumadocs wraps each heading's text in an
    <a href="#slug"> so the copy-anchor control has a target, which means the
-   "links are the signal" rule above would paint every h1–h6 cyan + underlined —
+   "links are the signal" rule above would paint every h1–h6 burgundy + underlined —
    an affordance lie (a heading that looks clickable) that also inverts
    hierarchy, making an h2 shout louder than the white serif h1.    Cyan stays reserved for real, navigational links; a heading's own anchor
    inherits the heading's ink (white in the void, near-black on paper) with no
@@ -190,7 +185,7 @@ html > body[data-scroll-locked] {
   color: var(--color-fd-muted-foreground);
 }
 
-/* Blockquote — the margin note. Neutral border, not cyan. */
+/* Blockquote — the margin note. Neutral border, not burgundy. */
 .prose :where(blockquote):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
   border-inline-start: 2px solid var(--color-fd-border);
   font-style: normal;
@@ -256,9 +251,9 @@ article h1:first-of-type {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid rgba(0, 212, 255, 0.25);
-  background: rgba(0, 212, 255, 0.06);
-  color: #00d4ff;
+  border: 1px solid rgba(194, 86, 107, 0.25);
+  background: rgba(194, 86, 107, 0.06);
+  color: #c2566b;
   border-radius: 9999px;
   padding: 0.3rem 0.85rem;
   font-size: 0.72rem;
@@ -270,8 +265,8 @@ article h1:first-of-type {
 /* The pulsing signal dot — works standalone or inside a badge */
 .ax-live-dot {
   display: inline-block;
-  background: #00d4ff;
-  box-shadow: 0 0 8px rgba(0, 212, 255, 0.9);
+  background: #c2566b;
+  box-shadow: 0 0 8px rgba(194, 86, 107, 0.9);
   animation: ax-pulse 2s ease-in-out infinite;
 }
 .ax-live-badge .ax-live-dot {
@@ -317,7 +312,7 @@ article h1:first-of-type {
 
 /* Glow — reserved for the single most important interaction */
 .ax-glow {
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1);
+  box-shadow: 0 0 20px rgba(194, 86, 107, 0.3), 0 0 40px rgba(194, 86, 107, 0.1);
 }
 
 /* Constellation canvas sits behind the hero. A <canvas> is a replaced
