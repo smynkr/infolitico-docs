@@ -9,6 +9,32 @@ sources: [".codex/harness-memory.json", "README.md", "package.json", "next.confi
 
 # Durable ledger
 
+## 2026-08-11 — Dark-first Infolitico brand theme pass
+
+- fd theme tokens replaced the template cyan with the burgundy family:
+  dark `#C2566B` (lightened for the void) on `#0A0A0F`, light `#5E0F1C` on
+  paper, ring/accent/glow aligned, `.ax-glow` and constellation recolored,
+  dead Axiom CSS utilities removed.
+- Dark is now the presentation default (`RootProvider theme={{ defaultTheme: 'dark' }}`).
+- docs.json identity: name Infolitico, brand colors, logo href to
+  infolitico.com; the stale Axiom "Sign in" primary was dropped (no
+  infolitico app host exists).
+- Support mailtos in page-feedback and search dialog corrected from
+  support@menuwright.com to support@infolitico.com.
+- OG card and 404 rebranded to the flame mark and the newsroom voice;
+  per-page siteName fixed to Infolitico Docs.
+- Verified: gates green, dark default + toggle, OG render; deployed via PR #3.
+
+Re-establish with:
+
+```bash
+npm run test:links
+npm run links:check
+npm run types:check
+npm run build
+npm run memory:check
+```
+
 ## 2026-08-10 — Standalone Infolitico docs site established
 
 - Scoped from the axiom-docs Fumadocs stack as a single-product site:
