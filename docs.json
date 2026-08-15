@@ -45,8 +45,18 @@
                 "group": "Reader",
                 "icon": "mail",
                 "pages": [
+                  "infolitico/reader-guide",
+                  "infolitico/the-feed",
                   "infolitico/newsletter",
+                  "infolitico/policies",
                   "infolitico/faq"
+                ]
+              },
+              {
+                "group": "Updates",
+                "icon": "history",
+                "pages": [
+                  "infolitico/changelog"
                 ]
               }
             ]

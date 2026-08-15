@@ -34,8 +34,12 @@ const config = {
       { source: '/how-it-works', destination: '/infolitico/how-it-works' },
       { source: '/editorial-standards', destination: '/infolitico/editorial-standards' },
       { source: '/content-sources', destination: '/infolitico/content-sources' },
+      { source: '/reader-guide', destination: '/infolitico/reader-guide' },
+      { source: '/the-feed', destination: '/infolitico/the-feed' },
       { source: '/newsletter', destination: '/infolitico/newsletter' },
+      { source: '/policies', destination: '/infolitico/policies' },
       { source: '/faq', destination: '/infolitico/faq' },
+      { source: '/changelog', destination: '/infolitico/changelog' },
     ];
   },
 };

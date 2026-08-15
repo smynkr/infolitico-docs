@@ -3,6 +3,8 @@ import { CHANGELOG_SLUG, getPageImage, source } from '@/lib/source';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+const BASE = 'https://docs.infolitico.com';
+
 export default async function Page(props: PageProps<'/[...slug]'>) {
   const { slug } = await props.params;
   const page = source.getPage(slug);
@@ -27,6 +29,9 @@ export async function generateMetadata(props: PageProps<'/[...slug]'>): Promise<
   return {
     title: page.data.title,
     description: page.data.description,
+    alternates: {
+      canonical: `${BASE}${page.url}`,
+    },
     openGraph: {
       type: 'website',
       siteName: 'Infolitico Docs',
