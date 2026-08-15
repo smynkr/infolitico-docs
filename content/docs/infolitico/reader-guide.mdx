@@ -1,0 +1,74 @@
+---
+title: Reader guide
+description: A map of Infolitico's reader-facing sections, story pages, people
+  hubs, and archive.
+---
+
+import { Compass, Mail, ShieldCheck } from 'lucide-react';
+
+Infolitico's primary navigation is a set of distinct reading desks. The site is
+free to browse: open a section, choose a story, or move through the archive
+without creating an account. The separate [Feed discussion](/infolitico/the-feed)
+is the exception; reading or joining a Feed conversation requires reader
+sign-in.
+
+## The primary navigation
+
+| Destination                          | What you will find                                                                                                                                                           |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Front Page** (`/`)                 | The current shared Infolitico edition. It is the homepage's canonical edition, with the latest story sections and the newsletter signup.                                     |
+| **Faith & Church** (`/faith-church`) | Worship, ministry, and communities of faith shaping public life. Its topics include ministry, worship and practice, faith and public life, formation, and the global church. |
+| **Verse Index** (`/verse-index`)     | The curated Bible verse library, organized by theme. A verse that appears in a published reflection links to its latest related story.                                       |
+| **Thoughts** (`/thoughts`)           | Longer, source-grounded reflections on the events of the day. Scripture appears when a natural connection is present, and the original source remains part of the reading.   |
+| **Nation** (`/nation`)               | Stories of communities, volunteers, and neighbors living out generosity across the country.                                                                                  |
+| **Business** (`/business`)           | Stories of enterprise, innovation, and people stewarding resources while building for the future.                                                                            |
+| **Culture** (`/culture`)             | Books, films, music, technology, and the ideas that shape how believers see the world.                                                                                       |
+| **World** (`/world`)                 | International developments and stories that connect readers to communities and peoples around the world.                                                                     |
+| **Politics** (`/politics`)           | Government, public service, and the leaders shaping communities and the wider world.                                                                                         |
+| **The Feed** (`/feed`)               | A bounded, verified snapshot of public Reddit conversations in curated faith, news, and civic communities. See the [Feed guide](/infolitico/the-feed).                       |
+| **Archive** (`/archive`)             | Published editions listed by day. Each date links to that day's stories and story count.                                                                                     |
+
+## Story pages
+
+A published story lives at `story/[slug]`. The page can include:
+
+- the headline and summary;
+- a curated verse when the story has one;
+- the Infolitico Newsroom byline, publication time, estimated reading time, section, and linked person when one is present;
+- an editorial image with its caption and available image attribution;
+- the story body;
+- the linked publisher source or source event;
+- share controls, a trust and provenance card, and related stories.
+
+A story keeps its source attribution visible when the page has a source
+headline. If a correction or retraction notice applies, the story route shows
+the editorial notice and links to the [corrections policy](/infolitico/policies#corrections-and-retractions).
+
+## People hubs
+
+The People index is available at `people`. It lists public figures who have
+published Infolitico stories. Each person has a hub at `person/[slug]` with the
+person's category, name, and latest related stories. The page is built around
+that person's published Infolitico coverage rather than a separate biography.
+
+## Move through an edition
+
+1. Start at **Front Page** for the shared current edition.
+2. Use a section desk when you want a particular subject area.
+3. Open a story to read the source-grounded report and its reflection.
+4. Follow the verse, person, source, or related-story links when you want more context.
+5. Use **Archive** to return to an earlier publication day.
+
+<Cards>
+  <Card icon={<Compass />} title="Get started" href="/infolitico/getting-started">
+    The daily reading rhythm and article structure.
+  </Card>
+
+  <Card icon={<Mail />} title="The Feed" href="/infolitico/the-feed">
+    Curated public snapshots and reader discussions.
+  </Card>
+
+  <Card icon={<ShieldCheck />} title="Editorial standards" href="/infolitico/editorial-standards">
+    The rules behind source-grounded reporting and reflection.
+  </Card>
+</Cards>

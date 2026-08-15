@@ -1,0 +1,92 @@
+---
+title: The Feed
+description: How Infolitico's curated public snapshots, disclosure, reader
+  discussions, and shared edition work.
+---
+
+import { Compass, ShieldCheck } from 'lucide-react';
+
+[The Feed](https://infolitico.com/feed) is a calm, bounded window into public
+conversations about faith, culture, news, and civic life. Infolitico selects a
+fixed allowlist of Reddit communities, verifies the posts in a worker, and
+serves a cached snapshot. It does not turn the Feed into a second newsroom or
+endorse the claims in a post.
+
+## Curated views
+
+The Feed has five named views. Every view uses the same bounded, verified public
+snapshot; changing views changes the selected allowlist, not the underlying
+verification or disclosure rules.
+
+| View                        | Communities included                                                                                                                                                                       |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **The Daily Mix**           | `r/Christianity`, `r/Catholicism`, `r/religion`, `r/news`, and `r/NeutralPolitics`                                                                                                         |
+| **Faith communities**       | The eight faith communities in the allowlist: `r/Christianity`, `r/Catholicism`, `r/Reformed`, `r/TrueChristian`, `r/OrthodoxChristianity`, `r/Bible`, `r/AskAChristian`, and `r/religion` |
+| **News communities**        | `r/news`, `r/worldnews`, `r/LocalNews`, and `r/UpliftingNews`                                                                                                                              |
+| **Civic communities**       | `r/NeutralPolitics`, `r/moderatepolitics`, `r/PoliticalDiscussion`, `r/PoliticalScience`, `r/Economics`, and `r/AskHistorians`                                                             |
+| **All curated communities** | All 18 communities in the faith, news, and civics allowlist                                                                                                                                |
+
+The worker requests each selected community's top posts for the day, verifies
+candidate posts against Reddit's embed, and keeps at most 24 verified posts in a
+snapshot. A refresh can be delayed or unavailable when a community fails or a
+candidate does not verify; an individual post page is unavailable after its
+stored expiry time.
+
+## Freshness and empty states
+
+The Feed labels a snapshot as **Verified public snapshot**, **Some listings
+delayed**, or **Listings temporarily unavailable**. A delayed label means the
+last verified snapshot is being served while the next refresh is late. When no
+usable verified posts are available, the page says so and shows no sample or
+invented posts. That fail-closed behavior is intentional.
+
+## External content disclosure
+
+Posts and excerpts come from public Reddit feeds and remain the responsibility
+of their authors. Infolitico curates the community allowlist, not individual
+posts, and does not endorse their claims or viewpoints.
+
+Opening a Feed item first takes you to an Infolitico detail and discussion page.
+That page repeats the disclosure, shows when the post was last verified, and
+links to the linked source when present and to the original Reddit post. The
+local conversation is hosted by Infolitico and is separate from Reddit; comments
+never write back to Reddit.
+
+## Reader discussion and sign-in
+
+You can browse the public snapshot without an account. Reading or joining the
+Infolitico-hosted conversation requires reader sign-in. Choose **Sign in** on a
+post's discussion panel, or open `/login`, enter an email address, and request a
+sign-in link. The sign-in page says that the email address is never shown to
+other readers.
+
+Signed-in readers can read the discussion and use the available comment
+controls. Public comments use a database-derived pseudonym rather than the
+reader's email address. Read the [Community Standards](/infolitico/policies#community-standards)
+for participation rules, reporting, moderation, and appeals.
+
+## One shared edition
+
+The Feed is separate from the shared Infolitico edition. Infolitico does not
+change story selection or ordering based on where you arrived from, a political
+label, or a personal profile. The same published story pool is available to
+every reader, and the system uses source provenance, themes, sections, and
+freshness to improve coverage without turning a visit into a political signal.
+
+Read [How the Edition Works](/infolitico/policies#shared-edition) for the full
+personalization statement, or return to the [Front Page](https://infolitico.com/)
+for the current edition.
+
+<Cards>
+  <Card icon={<Compass />} title="Reader guide" href="/infolitico/reader-guide">
+    Find every section, story, person, and archive route.
+  </Card>
+
+  <Card icon={<ShieldCheck />} title="Community standards" href="/infolitico/policies#community-standards">
+    Participate without harassment, threats, personal information, or deceptive links.
+  </Card>
+
+  <Card icon={<ShieldCheck />} title="Privacy" href="/infolitico/policies#privacy">
+    See what Feed sign-in and discussion data the site stores.
+  </Card>
+</Cards>
