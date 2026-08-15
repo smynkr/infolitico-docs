@@ -3,19 +3,12 @@ title: Changelog
 description: Documentation updates for Infolitico.
 ---
 
-## July 1 – August 14, 2026
+## July 1 – August 8, 2026
 
-149 user-facing changes shipped.
+125 user-facing changes shipped.
 
 ### New features
 
-- bylines and image enclosures for the RSS feed (Flipboard compliance) ([#315](https://github.com/smynkr/infolitico/pull/315))
-- IndexNow key file at spec URL via proxy + keyLocation alignment ([#311](https://github.com/smynkr/infolitico/pull/311))
-- add page-view backbone and home-scrolled depth events ([#310](https://github.com/smynkr/infolitico/pull/310))
-- INFO-214 core — retag invalidation and budget-exhaustion retry policy ([#302](https://github.com/smynkr/infolitico/pull/302))
-- INFO-212 Option A — derived summaries from verified publisher pages ([#303](https://github.com/smynkr/infolitico/pull/303))
-- distribution-ready RSS contract and discovery link ([#300](https://github.com/smynkr/infolitico/pull/300))
-- break medical-lab and table/desk motif repetition on section pages ([#290](https://github.com/smynkr/infolitico/pull/290))
 - Google News sitemap (48h daily-reflection leaf) ([#279](https://github.com/smynkr/infolitico/pull/279))
 - owner-gated AdSense footer canary (dark without env) — T3 money-path ([#280](https://github.com/smynkr/infolitico/pull/280))
 - add image-regen operator lane for artifact\_repairable image-gen failures ([#278](https://github.com/smynkr/infolitico/pull/278))
@@ -70,14 +63,6 @@ description: Documentation updates for Infolitico.
 
 ### Updates
 
-- Contain INFO-179 and INFO-180 editorial risks ([#237](https://github.com/smynkr/infolitico/pull/237))
-- Add a source-backed two-minute morning brief ([#166](https://github.com/smynkr/infolitico/pull/166))
-- info-212: root cause + fix design for zero-usable Google News summaries ([#296](https://github.com/smynkr/infolitico/pull/296))
-- info-183: crash-safe growth-asset lock recovery + CLI/preflight coverage ([#295](https://github.com/smynkr/infolitico/pull/295))
-- info-196: compact the first-visit privacy notice without changing consent behavior ([#294](https://github.com/smynkr/infolitico/pull/294))
-- info-189: move dev/CI to Node 22 LTS (Node 20 EOL) ([#293](https://github.com/smynkr/infolitico/pull/293))
-- info-203: split verse\_modification into bible\_citation for standalone references ([#292](https://github.com/smynkr/infolitico/pull/292))
-- INFO-132: Add owner-confirmed Thought corrections workflow ([#162](https://github.com/smynkr/infolitico/pull/162))
 - add structured failure logging to the Reddit feed scraper ([#285](https://github.com/smynkr/infolitico/pull/285))
 - Add owner-gated Qwen 3.8 bulk-generation harness scripts ([#247](https://github.com/smynkr/infolitico/pull/247))
 - Record INFO-197 deployment receipt ([#253](https://github.com/smynkr/infolitico/pull/253))
@@ -122,15 +107,6 @@ description: Documentation updates for Infolitico.
 
 ### Fixes
 
-- retry transient transport failures in the OpenAI-compatible LLM client ([#319](https://github.com/smynkr/infolitico/pull/319))
-- news-section length guidance so polish stops tripping the 50-word floor ([#317](https://github.com/smynkr/infolitico/pull/317))
-- feed excerpts reach 300+ chars by preferring the News section over short standfirsts ([#316](https://github.com/smynkr/infolitico/pull/316))
-- relax polish news-section floor 60 to 50 words ([#312](https://github.com/smynkr/infolitico/pull/312))
-- RRM queue ownership on late errors + fail-closed override (follow-up to #298) ([#309](https://github.com/smynkr/infolitico/pull/309))
-- ephemeral harness ergonomics and reasoning-budget accounting ([#301](https://github.com/smynkr/infolitico/pull/301))
-- route-scope Reader Revenue Manager to daily-reflection articles ([#298](https://github.com/smynkr/infolitico/pull/298))
-- INFO-180 tooling — GET ledger probe, bound rpc, audit attribution fixes ([#297](https://github.com/smynkr/infolitico/pull/297))
-- enforce bounded snapshot visibility ([#287](https://github.com/smynkr/infolitico/pull/287))
 - fetch each Feed community individually; parse both Reddit title markup variants ([#286](https://github.com/smynkr/infolitico/pull/286))
 - match Reddit's redesigned embed title markup on The Feed ([#284](https://github.com/smynkr/infolitico/pull/284))
 - prefilter pre-contract polished bodies in image-regen lane ([#283](https://github.com/smynkr/infolitico/pull/283))
