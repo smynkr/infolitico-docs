@@ -183,6 +183,12 @@ description: Documentation updates for Infolitico.
 - correct 3 bible\_verses with genuine ESV wording drift ([#108](https://github.com/smynkr/infolitico/pull/108))
 - polish reject-verdict parsing + faith RSS source expansion ([#106](https://github.com/smynkr/infolitico/pull/106))
 
+## August 14, 2026
+
+### Fixes
+
+- image-pipeline health pass: exempt generated-image library assets from 30-day byte-hash dedupe so recurring-theme stories can publish, retry transient image-provider errors (HTTP 429/5xx, timeout) with bounded backoff, and page through the full 30-day dedupe window instead of truncating ([#321](https://github.com/smynkr/infolitico/pull/321))
+
 ## August 15, 2026
 
 ### Documentation expansion
