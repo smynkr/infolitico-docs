@@ -5,7 +5,13 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { parseSSEPayload } from "../docs-agent.mjs";
+import {
+  backendReceiptLabel,
+  buildApiRequestBody,
+  parseSSEPayload,
+  retryAfterDelayMs,
+  validateGlmReasoningEffort,
+} from "../docs-agent.mjs";
 
 const testDir = path.dirname(fileURLToPath(import.meta.url));
 const driverPath = path.resolve(testDir, "..", "docs-agent.mjs");
@@ -206,6 +212,8 @@ console.log(JSON.stringify({ stub: true, destination: dest }));
           encoding: "utf8",
           env: {
             ...process.env,
+            DOCS_AGENT_SOURCE_TOKEN: "source-token",
+            GH_TOKEN: "destination-token",
             DOCS_AGENT_CLAUDE_CMD: backendPath,
             DOCS_AGENT_GH_LOG: ghLogPath,
             DOCS_AGENT_LOG_DIR: path.join(root, "logs"),
@@ -512,6 +520,95 @@ test("SSE payload parsing survives provider quirks and truncation signals", asyn
     assert.equal(parsed.content, "first");
     assert.equal(parsed.finishReason, "stop");
   });
+});
+
+const GLM_PROVIDER_FIXTURE = Object.freeze({
+  accountId: "00000000000000000000000000000000",
+  apiBase: "https://api.cloudflare.com/client/v4/accounts/00000000000000000000000000000000/ai/v1",
+  model: "@cf/zai-org/glm-5.3-flash",
+  maxTokens: 49152,
+  reasoningEffort: "high",
+  reasoningEffortEnv: "DOCS_AGENT_GLM_REASONING_EFFORT",
+});
+
+function normalizeProviderBody(body) {
+  return {
+    model: body.model,
+    messages: body.messages,
+    temperature: body.temperature,
+    max_tokens: body.max_tokens,
+    reasoning_effort: body.reasoning_effort,
+    stream: body.stream,
+  };
+}
+
+test("GLM provider parity uses the reviewed Cloudflare contract", () => {
+  const backend = { ...GLM_PROVIDER_FIXTURE };
+  const body = buildApiRequestBody(backend, "provider parity prompt", true);
+  assert.deepEqual(normalizeProviderBody(body), {
+    model: GLM_PROVIDER_FIXTURE.model,
+    messages: [{ role: "user", content: "provider parity prompt" }],
+    temperature: 0.2,
+    max_tokens: GLM_PROVIDER_FIXTURE.maxTokens,
+    reasoning_effort: "high",
+    stream: true,
+  });
+
+  assert.equal(validateGlmReasoningEffort(backend, true, undefined), null);
+  for (const invalid of ["", "none", "max", "xhigh", "HIGH"]) {
+    assert.match(
+      validateGlmReasoningEffort(backend, true, invalid),
+      /must be low, medium, or high/,
+      `expected ${JSON.stringify(invalid)} to be rejected`,
+    );
+  }
+  assert.equal(
+    validateGlmReasoningEffort(
+      { ...backend, model: "@cf/zai-org/glm-5.2" },
+      true,
+      "invalid",
+    ),
+    null,
+    "reasoning validation is exact-model scoped",
+  );
+
+  const genericBody = buildApiRequestBody(backend, "provider parity prompt", false);
+  assert.equal(Object.hasOwn(genericBody, "reasoning_effort"), false);
+  assert.equal(retryAfterDelayMs(new Headers({ "Retry-After": "2" }), 1_000), 2_000);
+  assert.equal(retryAfterDelayMs(new Headers({ "Retry-After": "99" }), 1_000), 5_000);
+
+  const childEnv = { ...process.env, DOCS_AGENT_GLM_API_BASE: GLM_PROVIDER_FIXTURE.apiBase, GLM_API_KEY: "test-key" };
+  delete childEnv.DOCS_AGENT_GLM_MODEL;
+  const receipt = spawnSync(
+    process.execPath,
+    [
+      "--input-type=module",
+      "--eval",
+      `const m = await import(${JSON.stringify(driverPath)}); process.stdout.write(m.backendReceiptLabel("glm"));`,
+    ],
+    { env: childEnv, encoding: "utf8" },
+  );
+  assert.equal(receipt.status, 0, receipt.stderr);
+  assert.match(receipt.stdout, /model: `@cf\/zai-org\/glm-5\.3-flash`/);
+
+  const template = readFileSync(path.resolve(testDir, "..", "docs-agent.yml"), "utf8")
+    .replace(/\r\n/g, "\n")
+    .replace(/[ \t]+/g, " ");
+  for (const expected of [
+    "CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}",
+    "DOCS_AGENT_GLM_API_BASE: ${{ vars.DOCS_AGENT_GLM_API_BASE }}",
+    "DOCS_AGENT_GLM_MODEL: ${{ vars.DOCS_AGENT_GLM_MODEL }}",
+    "DOCS_AGENT_GLM_MAX_TOKENS: ${{ vars.DOCS_AGENT_GLM_MAX_TOKENS }}",
+    "DOCS_AGENT_GLM_REASONING_EFFORT: ${{ vars.DOCS_AGENT_GLM_REASONING_EFFORT || 'high' }}",
+    "GLM_API_KEY: ${{ secrets.CLOUDFLARE_WORKERS_AI_TOKEN }}",
+    "DOCS_AGENT_SOURCE_TOKEN: ${{ github.token }}",
+    "GH_TOKEN: ${{ secrets.DOCS_REPO_PAT }}",
+  ]) {
+    assert.ok(template.includes(expected), `workflow is missing ${expected}`);
+  }
+  assert.doesNotMatch(template, /secrets\.GLM_API_KEY/);
+  assert.match(template, /name: hosted \(GLM 5\.2 — drafts doc update\)/);
+  assert.match(template, /- name: Run docs-agent with GLM 5\.2/);
 });
 
 test("T8: empty and malformed backend output fail without a PR attempt", async (t) => {
