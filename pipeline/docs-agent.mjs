@@ -300,6 +300,7 @@ const NON_GITHUB_CREDENTIAL_KEYS = new Set([
   "GIT_ASKPASS",
   "SSH_ASKPASS",
   "GIT_SSH_COMMAND",
+  "SSH_AUTH_SOCK",
 ]);
 
 export function nonGithubChildEnv(baseEnv = process.env) {

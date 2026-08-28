@@ -425,8 +425,10 @@ test("non-GitHub child environments scrub GitHub and git-config credentials", (t
     GIT_CONFIG_KEY_1: "credential.useHttpPath",
     GIT_CONFIG_VALUE_1: "true",
     GIT_CONFIG_PARAMETERS: "'credential.helper'='store'",
+    SSH_AUTH_SOCK: "/tmp/ssh-agent.sock",
   });
   for (const key of scrubbedKeys) assert.equal(scrubbed[key], undefined, `${key} was not scrubbed`);
+  assert.equal(scrubbed.SSH_AUTH_SOCK, undefined, "SSH_AUTH_SOCK was not scrubbed");
 });
 
 test("T3: base branch is auto-detected from the docs repo, not hardcoded to main", (t) => {
