@@ -43,8 +43,13 @@ import { fileURLToPath } from "node:url";
 // ---------------------------------------------------------------------------
 
 const PRODUCTS = ["layer", "overwatch", "locus", "routeshift", "codex", "invest"];
-const CLOUDFLARE_GLM_53_MODEL = "@cf/zai-org/glm-5.3-flash";
-const VALID_GLM_REASONING_EFFORTS = new Set(["low", "medium", "high"]);
+export const CLOUDFLARE_GLM_53_MODEL = "@cf/zai-org/glm-5.3-flash";
+export const VALID_GLM_REASONING_EFFORTS = Object.freeze(["low", "medium", "high"]);
+const VALID_GLM_REASONING_EFFORT_SET = new Set(VALID_GLM_REASONING_EFFORTS);
+
+export function cloudflareApiBaseForAccount(accountId) {
+  return `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/v1`;
+}
 
 const DEFAULT_EXCLUDE_GLOBS = [
   "**/package-lock.json",
@@ -116,6 +121,11 @@ const BACKENDS = {
     maxTokensEnv: "DOCS_AGENT_GLM_MAX_TOKENS",
   },
 };
+
+export function getBackendConfig(backendName) {
+  const backend = BACKENDS[backendName];
+  return backend ? { ...backend } : null;
+}
 
 // 20 min: the GLM budget is 49152 tokens and a slow reasoning stream must be
 // able to finish inside the window; the two knobs move together.
@@ -273,24 +283,10 @@ function matchesAnyGlob(filePath, globs) {
 // shell helpers
 // ---------------------------------------------------------------------------
 
-function run(cmd, args, opts = {}) {
-  const res = spawnSync(cmd, args, { encoding: "utf8", ...opts });
-  if (res.error) fail(`failed to run \`${cmd} ${args.join(" ")}\`: ${res.error.message}`);
-  if (res.status !== 0 && !opts.allowFail) {
-    fail(`\`${cmd} ${args.join(" ")}\` exited ${res.status}\n--- stderr ---\n${res.stderr}`);
-  }
-  return res;
-}
-
-function runAllowFail(cmd, args, opts = {}) {
-  return spawnSync(cmd, args, { encoding: "utf8", ...opts });
-}
-
 // GitHub auth is split by direction. Source PR reads use the dedicated
 // DOCS_AGENT_SOURCE_TOKEN; destination docs-repo operations use GH_TOKEN.
-// The two child environments deliberately select only their direction's
-// token so a cross-owner standalone workflow cannot silently use the wrong
-// credential.
+// Non-GitHub children (backends, git, and migration) must never inherit any
+// GitHub credential or credential-bearing git config override.
 const GITHUB_AUTH_KEYS = [
   "GH_TOKEN",
   "GITHUB_TOKEN",
@@ -299,6 +295,44 @@ const GITHUB_AUTH_KEYS = [
   "DOCS_REPO_PAT",
   "DOCS_AGENT_SOURCE_TOKEN",
 ];
+const GITHUB_AUTH_KEY_SET = new Set(GITHUB_AUTH_KEYS);
+const NON_GITHUB_CREDENTIAL_KEYS = new Set([
+  "GIT_ASKPASS",
+  "SSH_ASKPASS",
+  "GIT_SSH_COMMAND",
+]);
+
+export function nonGithubChildEnv(baseEnv = process.env) {
+  const env = { ...baseEnv };
+  for (const key of Object.keys(env)) {
+    if (
+      GITHUB_AUTH_KEY_SET.has(key) ||
+      key === "GIT_CONFIG" ||
+      key.startsWith("GIT_CONFIG_") ||
+      NON_GITHUB_CREDENTIAL_KEYS.has(key)
+    ) {
+      delete env[key];
+    }
+  }
+  return env;
+}
+
+function run(cmd, args, opts = {}) {
+  const childOpts = { encoding: "utf8", ...opts };
+  if (childOpts.env === undefined) childOpts.env = nonGithubChildEnv();
+  const res = spawnSync(cmd, args, childOpts);
+  if (res.error) fail(`failed to run \`${cmd} ${args.join(" ")}\`: ${res.error.message}`);
+  if (res.status !== 0 && !opts.allowFail) {
+    fail(`\`${cmd} ${args.join(" ")}\` exited ${res.status}\n--- stderr ---\n${res.stderr}`);
+  }
+  return res;
+}
+
+function runAllowFail(cmd, args, opts = {}) {
+  const childOpts = { encoding: "utf8", ...opts };
+  if (childOpts.env === undefined) childOpts.env = nonGithubChildEnv();
+  return spawnSync(cmd, args, childOpts);
+}
 
 function sourceGhEnv() {
   const token = process.env.DOCS_AGENT_SOURCE_TOKEN;
@@ -309,8 +343,7 @@ function sourceGhEnv() {
       "Local --range collection needs no source token."
     );
   }
-  const env = { ...process.env };
-  for (const key of GITHUB_AUTH_KEYS) delete env[key];
+  const env = nonGithubChildEnv();
   env.GH_TOKEN = token;
   return env;
 }
@@ -324,8 +357,7 @@ function destinationGhEnv() {
       "calls destination GitHub and therefore needs no token."
     );
   }
-  const env = { ...process.env };
-  for (const key of GITHUB_AUTH_KEYS) delete env[key];
+  const env = nonGithubChildEnv();
   env.GH_TOKEN = token;
   return env;
 }
@@ -716,11 +748,38 @@ function isCloudflareGlm53Mode(backend, cloudflareMode) {
   return Boolean(cloudflareMode && backend.model === CLOUDFLARE_GLM_53_MODEL);
 }
 
+export function resolveCloudflareGlmMode(backendName, backend) {
+  if (backendName !== "glm") return false;
+  const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || "";
+  let apiBaseHostname = "";
+  try {
+    apiBaseHostname = new URL(backend.apiBase).hostname;
+  } catch {
+    // Validation below still fails closed for the exact Cloudflare model.
+  }
+  return (
+    backend.model === CLOUDFLARE_GLM_53_MODEL ||
+    accountId !== "" ||
+    apiBaseHostname === "api.cloudflare.com"
+  );
+}
+
+export function validateCloudflareGlmConfig(backend, cloudflareMode, accountId = process.env.CLOUDFLARE_ACCOUNT_ID || "") {
+  if (!cloudflareMode) return null;
+  if (!/^[0-9a-f]{32}$/.test(accountId)) {
+    return "CLOUDFLARE_ACCOUNT_ID must be 32 lowercase hexadecimal characters";
+  }
+  if (backend.apiBase !== cloudflareApiBaseForAccount(accountId)) {
+    return "DOCS_AGENT_GLM_API_BASE must be exactly the Cloudflare account endpoint";
+  }
+  return null;
+}
+
 export function validateGlmReasoningEffort(backend, cloudflareMode, configuredReasoningEffort) {
   if (!isCloudflareGlm53Mode(backend, cloudflareMode)) return null;
   if (
-    !VALID_GLM_REASONING_EFFORTS.has(backend.reasoningEffort) ||
-    (configuredReasoningEffort !== undefined && !VALID_GLM_REASONING_EFFORTS.has(configuredReasoningEffort))
+    !VALID_GLM_REASONING_EFFORT_SET.has(backend.reasoningEffort) ||
+    (configuredReasoningEffort !== undefined && !VALID_GLM_REASONING_EFFORT_SET.has(configuredReasoningEffort))
   ) {
     return `${backend.reasoningEffortEnv} must be low, medium, or high`;
   }
@@ -751,8 +810,7 @@ export function backendReceiptLabel(backendName) {
   return `**${backendName}** (command: \`${backend.cmd} ${backend.args.join(" ")}\`)`;
 }
 
-
-function runBackend(backendName, prompt, timeoutMs) {
+export function runBackend(backendName, prompt, timeoutMs) {
   const backend = BACKENDS[backendName];
   if (!backend) fail(`unknown backend "${backendName}" (must be one of: ${Object.keys(BACKENDS).join(", ")})`);
 
@@ -772,24 +830,9 @@ function runBackend(backendName, prompt, timeoutMs) {
     }
     let cloudflareMode = false;
     if (backendName === "glm") {
-      const accountId = process.env.CLOUDFLARE_ACCOUNT_ID || "";
-      let apiBaseHostname = "";
-      try {
-        apiBaseHostname = new URL(backend.apiBase).hostname;
-      } catch {
-        // A malformed generic URL will fail at fetch; Cloudflare mode below
-        // still fails closed when an account ID was supplied.
-      }
-      cloudflareMode = accountId !== "" || apiBaseHostname === "api.cloudflare.com";
-      if (cloudflareMode) {
-        if (!/^[0-9a-f]{32}$/.test(accountId)) {
-          fail("CLOUDFLARE_ACCOUNT_ID must be 32 lowercase hexadecimal characters");
-        }
-        const expectedApiBase = `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/v1`;
-        if (backend.apiBase !== expectedApiBase) {
-          fail("DOCS_AGENT_GLM_API_BASE must be exactly the Cloudflare account endpoint");
-        }
-      }
+      cloudflareMode = resolveCloudflareGlmMode(backendName, backend);
+      const cloudflareError = validateCloudflareGlmConfig(backend, cloudflareMode);
+      if (cloudflareError) fail(cloudflareError);
       const reasoningError = validateGlmReasoningEffort(
         backend,
         cloudflareMode,
@@ -911,7 +954,7 @@ function runBackend(backendName, prompt, timeoutMs) {
   }
 
   // --- CLI backend (spawn a subprocess) ---
-  const check = runAllowFail(backend.cmd, ["--version"]);
+  const check = runAllowFail(backend.cmd, ["--version"], { env: nonGithubChildEnv() });
   if (check.error) {
     fail(
       `backend CLI "${backend.cmd}" was not found on PATH (${check.error.message}). ` +
@@ -924,7 +967,10 @@ function runBackend(backendName, prompt, timeoutMs) {
   return new Promise((resolve) => {
     // Backends with stdin=false receive the prompt as a trailing argument.
     const spawnArgs = backend.stdin ? backend.args : [...backend.args, prompt];
-    const child = spawn(backend.cmd, spawnArgs, { stdio: ["pipe", "pipe", "pipe"] });
+    const child = spawn(backend.cmd, spawnArgs, {
+      stdio: ["pipe", "pipe", "pipe"],
+      env: nonGithubChildEnv(),
+    });
     let stdout = "";
     let stderr = "";
     let timedOut = false;
@@ -1290,7 +1336,7 @@ function applyChangesAndOpenPR(opts, { fileBlocks, prMeta, backendName, droppedP
   }
 
   const bodyLines = [
-    `Drafted automatically by \`docs-agent.mjs\` (backend: **${backendName}**).`,
+    `Drafted automatically by \`docs-agent.mjs\` (backend: ${backendReceiptLabel(backendName)}).`,
     "",
     `Source PR: ${prMeta.url || `local range ${opts.range}`}`,
     prMeta.title ? `Source title: ${prMeta.title}` : "",
@@ -1440,7 +1486,10 @@ function regenerateGeneratedOutput(docsRepoPath) {
     );
   }
   log("regenerating content/docs + meta.json from canonical flat sources...");
-  const res = runAllowFail(process.execPath, [migrationScript], { cwd: docsRepoPath });
+  const res = runAllowFail(process.execPath, [migrationScript], {
+    cwd: docsRepoPath,
+    env: nonGithubChildEnv(),
+  });
   if (res.status !== 0) {
     fail(
       `content/docs regeneration failed (exit ${res.status}). The canonical edits were written ` +
