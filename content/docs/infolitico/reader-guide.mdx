@@ -14,27 +14,30 @@ sign-in.
 
 ## The primary navigation
 
-| Destination                          | What you will find                                                                                                                                                           |
-| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Front Page** (`/`)                 | The current shared Infolitico edition. It is the homepage's canonical edition, with the latest story sections and the newsletter signup.                                     |
-| **Faith & Church** (`/faith-church`) | Worship, ministry, and communities of faith shaping public life. Its topics include ministry, worship and practice, faith and public life, formation, and the global church. |
-| **Verse Index** (`/verse-index`)     | The curated Bible verse library, organized by theme. A verse that appears in a published reflection links to its latest related story.                                       |
-| **Thoughts** (`/thoughts`)           | Longer, source-grounded reflections on the events of the day. Scripture appears when a natural connection is present, and the original source remains part of the reading.   |
-| **Nation** (`/nation`)               | Stories of communities, volunteers, and neighbors living out generosity across the country.                                                                                  |
-| **Business** (`/business`)           | Stories of enterprise, innovation, and people stewarding resources while building for the future.                                                                            |
-| **Culture** (`/culture`)             | Books, films, music, technology, and the ideas that shape how believers see the world.                                                                                       |
-| **World** (`/world`)                 | International developments and stories that connect readers to communities and peoples around the world.                                                                     |
-| **Politics** (`/politics`)           | Government, public service, and the leaders shaping communities and the wider world.                                                                                         |
-| **The Feed** (`/feed`)               | A bounded, verified snapshot of public Reddit conversations in curated faith, news, and civic communities. See the [Feed guide](/infolitico/the-feed).                       |
-| **Archive** (`/archive`)             | Published editions listed by day. Each date links to that day's stories and story count.                                                                                     |
+| Destination                          | What you will find                                                                                                                                                                                                                    |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Front Page** (`/`)                 | The current shared Infolitico edition. It is the homepage's canonical edition, with the latest story sections and the newsletter signup.                                                                                              |
+| **Faith & Church** (`/faith-church`) | Worship, ministry, and communities of faith shaping public life. Its topics include ministry, worship and practice, faith and public life, formation, and the global church.                                                          |
+| **Verse Index** (`/verse-index`)     | The curated Bible verse library, organized by theme. A verse that appears in a published reflection links to its latest related story. The "A verse for right now" picker reveals a small shelf of Scripture for the moment you name. |
+| **Theme Index** (`/themes`)          | The twenty spiritual themes the newsroom reads the day's headlines through. Each theme has its own hub at `/themes/[theme]` gathering its verses and every reflection filed under it.                                                 |
+| **Thoughts** (`/thoughts`)           | Longer, source-grounded reflections on the events of the day. Scripture appears when a natural connection is present, and the original source remains part of the reading.                                                            |
+| **Nation** (`/nation`)               | Stories of communities, volunteers, and neighbors living out generosity across the country.                                                                                                                                           |
+| **Business** (`/business`)           | Stories of enterprise, innovation, and people stewarding resources while building for the future.                                                                                                                                     |
+| **Culture** (`/culture`)             | Books, films, music, technology, and the ideas that shape how believers see the world.                                                                                                                                                |
+| **World** (`/world`)                 | International developments and stories that connect readers to communities and peoples around the world.                                                                                                                              |
+| **Politics** (`/politics`)           | Government, public service, and the leaders shaping communities and the wider world.                                                                                                                                                  |
+| **The Feed** (`/feed`)               | A bounded, verified snapshot of public Reddit conversations in curated faith, news, and civic communities. See the [Feed guide](/infolitico/the-feed).                                                                                |
+| **Search** (`/search`)               | Find published reflections and thoughts by headline. Try a person, a place, or one word from the story you remember.                                                                                                                  |
+| **Archive** (`/archive`)             | Published editions listed by day. Each date links to that day's stories and story count.                                                                                                                                              |
 
 ## Story pages
 
 A published story lives at `/story/[slug]`. The page can include:
 
 - the headline and summary;
-- a curated verse when the story has one;
+- a curated verse when the story has one, with a link to read the full chapter and a "Share as image" verse card;
 - the Infolitico Newsroom byline, publication time, estimated reading time, section, and linked person when one is present;
+- a link to the story's theme hub when it carries a spiritual theme;
 - an editorial image with its caption and available image attribution;
 - the story body;
 - the linked publisher source or source event;
@@ -43,6 +46,16 @@ A published story lives at `/story/[slug]`. The page can include:
 A story keeps its source attribution visible when the page has a source
 headline. If a correction or retraction notice applies, the story route shows
 the editorial notice and links to the [corrections policy](/infolitico/policies#corrections-and-retractions).
+
+## Theme hubs
+
+The Theme Index at `/themes` lists every spiritual theme in the newsroom's
+taxonomy, each with its verse count, reflection count, and latest story. Each
+theme hub at `/themes/[theme]` gathers the verses tagged to that theme and
+every reflection filed under it, and links back to the full shelf in the
+Verse Index. Story pages and Verse Index theme shelves cross-link to their
+hubs, so a theme is a second way into the archive — by what the news asks of
+us rather than by day or section.
 
 ## People hubs
 
@@ -56,8 +69,8 @@ that person's published Infolitico coverage rather than a separate biography.
 1. Start at **Front Page** for the shared current edition.
 2. Use a section desk when you want a particular subject area.
 3. Open a story to read the source-grounded report and its reflection.
-4. Follow the verse, person, source, or related-story links when you want more context.
-5. Use **Archive** to return to an earlier publication day.
+4. Follow the verse, theme, person, source, or related-story links when you want more context.
+5. Use **Archive** to return to an earlier publication day, or **Search** to find a story by headline.
 
 <Cards>
   <Card icon={<Compass />} title="Get started" href="/infolitico/getting-started">
