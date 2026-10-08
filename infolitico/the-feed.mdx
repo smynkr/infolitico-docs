@@ -25,17 +25,22 @@ verification or disclosure rules.
 
 The worker requests each selected community's top posts for the day, verifies
 candidate posts against Reddit's embed, and keeps at most 24 verified posts in a
-snapshot. A refresh can be delayed or unavailable when a community fails or a
+snapshot. A refresh can be partial or unavailable when a community fails or a
 candidate does not verify; an individual post page is unavailable after its
 stored expiry time.
 
 ## Freshness and empty states
 
-The Feed labels a snapshot as **Verified public snapshot**, **Some listings
-delayed**, or **Listings temporarily unavailable**. A delayed label means the
-last verified snapshot is being served while the next refresh is late. When no
-usable verified posts are available, the page says so and shows no sample or
-invented posts. That fail-closed behavior is intentional.
+The Feed labels a snapshot as **Verified public snapshot**, **Partially
+refreshed snapshot**, **Snapshot data is stale**, or **Listings temporarily
+unavailable**. A partially refreshed label means the last refresh could not
+verify every selected community, so the served snapshot is missing those
+listings; any listings retained from the failed communities keep their earlier
+per-post verification times. A stale label means the snapshot's freshness
+window has elapsed — the page states when the snapshot was assembled and when
+its freshness window ended. When no usable verified posts are available, the
+page says so and shows no sample or invented posts. That fail-closed behavior
+is intentional.
 
 ## External content disclosure
 
