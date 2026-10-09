@@ -1,13 +1,27 @@
 ---
 title: Durable ledger
 category: current-state
-updated: 2026-08-11
+updated: 2026-10-09
 summary: Dated durable facts and their source anchors
 nav_order: 130
-sources: [".codex/harness-memory.json", "README.md", "package.json", "next.config.mjs", "docs.json", "_migration/tools/lib/shared.mjs", "components/brand/products.ts", "public/logo.svg"]
+sources: [".codex/harness-memory.json", "README.md", "package.json", "next.config.mjs", "docs.json", "_migration/tools/lib/shared.mjs", "components/brand/products.ts", "public/logo.svg", "infolitico/getting-started.mdx", "infolitico/how-it-works.mdx"]
 ---
 
 # Durable ledger
+
+## 2026-10-09 — Daily article target and polished-body guard
+
+- The daily-reflection article's 300–500-word length is an editorial target,
+  not a guaranteed generated output range. The separate product polished-body
+  guard is 250–550 words; both are documented from product source commit
+  [`d75e102`](https://github.com/smynkr/infolitico/commit/d75e1029b54d11f5a7b840765402ecf5276d4e5c)
+  (`packages/pipeline/steps/content-profiles.ts` and
+  `packages/pipeline/steps/polish-and-guard.ts`).
+- The standalone guides preserve that distinction:
+  `infolitico/getting-started.mdx` describes the editorial target, and
+  `infolitico/how-it-works.mdx` describes drafting toward it. Docs follow-up:
+  [PR #56](https://github.com/smynkr/infolitico-docs/pull/56). No product
+  source or configuration was changed.
 
 
 ## 2026-08-11 — Harness-memory conformance (audit FAIL → PASS)
