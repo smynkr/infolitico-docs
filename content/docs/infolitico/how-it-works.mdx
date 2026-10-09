@@ -1,28 +1,33 @@
 ---
 title: How Infolitico works
-description: "The autonomous publishing pipeline: sourcing, faith-angle
-  judgment, deterministic verse selection, drafting, guarding, and publishing."
+description: "The automated daily-news pipeline: source evidence, optional verse
+  selection, drafting, guards, and publication."
 ---
 
 import { Rss, ShieldCheck } from 'lucide-react';
 
-Infolitico publishes without human editorial writers. A named-stage pipeline
-takes a source event through sourcing, judgment, drafting, guarding, and
-publishing. Each stage either passes the story forward or rejects it — and
-rejection is a normal, deliberate outcome.
+The default daily-news lane is an automated source-to-publication pipeline.
+It admits source-backed events, drafts and guards a story, then either
+publishes it or rejects it. A separate owner-gated script supports
+hand-authored Inspirational Thought articles; it is not part of this pipeline.
 
 <ProcessFlow
   accent="#5E0F1C"
-  caption="From a real news event to a published devotional article: every stage either advances the story or rejects it. Rejections are expected — a story with no genuine faith connection is never forced into a devotional frame."
+  caption="From a real news event to a published article: every stage either advances the story or rejects it. Rejections are expected — a story with no genuine faith connection is never forced into a devotional frame."
   steps={[
   { title: "Source evidence", description: "A curated feed event must carry a nonempty factual summary — not just a headline." },
   { title: "Faith-angle judgment", description: "The theme extractor decides whether the event has a natural faith/values angle at all." },
-  { title: "Verse selection", description: "A deterministic hash of the event picks one curated NLT verse — same event, same verse." },
+  { title: "Verse selection", description: "When recommended, a curated NLT verse is selected by hashing the source event ID within the eligible theme bucket; recent-use exclusions can change that bucket." },
   { title: "Outline and draft", description: "Structure the arc, then write the 300–500 word article with reflection and prayer." },
   { title: "Guard and review", description: "Content gates, headline novelty, and person checks run before anything can publish." },
-  { title: "Publish", description: "The image gate clears and the story goes live on the site and newsletter." },
+  { title: "Publish", description: "The image gate clears and the story goes live on the website and public RSS feed; newsletter delivery is separate." },
 ]}
 />
+
+The source repository includes a separate digest sender and timer. Its dated
+operations record logs one past production run that skipped an edition; that
+does not verify the current schedule or a delivered digest. See the
+[newsletter guide](/infolitico/newsletter).
 
 ## The stages
 
@@ -44,14 +49,16 @@ rejected on this ground and none were forced through. When the verdict is
 
 ### Verse selection (`verse-selector`)
 
-A Bible verse is selected deterministically: the index into the curated
-`bible_verses` database is derived from a SHA-256 hash of the source event's
-ID, so re-running the pipeline for the same event always picks the same verse.
+When recommended, a Bible verse is selected deterministically: the index into
+the curated `bible_verses` database is derived from a SHA-256 hash of the
+source event's ID. The candidate bucket can first exclude verses used in
+unretracted stories during the default seven-day recency window. If that set
+would be empty, or the recency lookup fails, selection falls back to the full
+theme bucket. Thus the event ID determines the index for a fixed candidate
+set, but a changed recency set can change the selected verse.
 When a verse is not recommended, the article publishes with a reflection but
 no verse blockquote. Optional theologian commentary quotes are attached in
-code — capped at three, deterministically ordered — and are **never** allowed
-to round-trip through a model's structured response, so a careless or hostile
-model cannot smuggle a fabricated quote into the article.
+code, capped at three candidates, and never trusted from a model response.
 
 ### Outline and draft
 
@@ -70,8 +77,8 @@ gate clears, and the story publishes.
 
 ## Determinism and safety by design
 
-- The same source event always yields the same verse and the same article
-  structure — the pipeline is reproducible, not whimsical.
+- Article structure is reproducible. Verse choice is stable only while its
+  eligible candidate set is unchanged; recent-use exclusions can change it.
 - Scripture text is reproduced exactly from the curated database; the
   pipeline never fabricates or modifies a verse (see
   [editorial standards](/infolitico/editorial-standards)).

@@ -6,16 +6,40 @@ description: "Where Infolitico's source events come from: a curated public feed
 
 import { ShieldCheck, Workflow } from 'lucide-react';
 
-Infolitico sources its stories from a curated diet of public feeds. The feed
-list is deliberate: a small set of trusted, real-world news sources, trimmed
-and expanded over time based on source-health review.
+The checked-in `RSS_FEEDS` configuration combines direct publisher RSS/Atom
+feeds with Google News site and topic searches. It is a configuration
+snapshot, not evidence that every feed is reachable from the ingestion host
+or appears in the deployed edition.
 
-## The feed diet
+## Configured source families
 
-The pipeline ingests public RSS/Atom feeds from a curated set of sources. The
-diet is intentionally limited — it is a morning devotional's news cycle, not a
-fire hose. Feed health is monitored, and source-health review happens before
-any targeted direct-source expansion.
+- **Wire-named sources:** AP and Reuters searches. These entries use Google
+  News site-search RSS, not direct AP or Reuters feeds.
+- **National and general news:** BBC, NPR, PBS NewsHour, CBS News, ABC News,
+  USA Today, and Axios.
+- **Business and technology:** Bloomberg, CNBC, The Wall Street Journal,
+  TechCrunch, The Verge, WIRED, Ars Technica, Fortune, Fast Company, Business
+  Insider, and The Information.
+- **Culture:** NPR Books, NPR Music, NPR Culture, Variety, The Hollywood
+  Reporter, and ArtNews.
+- **Local, regional, and international:** The Texas Tribune, CalMatters,
+  WBEZ, WBUR, WAMU, the Miami Herald, The Seattle Times, MinnPost, BBC World,
+  Deutsche Welle, France 24, and Al Jazeera.
+- **Faith, values, service, and public interest:** Christianity Today,
+  Religion News Service, Christian Post, WORLD Magazine, Deseret News,
+  Relevant, EWTN News, Baptist Press, CBN News, Christian Science Monitor,
+  Smithsonian, Live Science, World Vision, Direct Relief, Good News Network,
+  and Google News topic searches.
+
+<Callout type="warn">
+  Feed configuration is not live-health evidence. Merged
+  [PR #426](https://github.com/smynkr/infolitico/pull/426) recorded that the
+  ingestion host received a Cloudflare 403 from Smithsonian and had no
+  `source_events` from it; ArtNews was verified as a Culture replacement from
+  that host. The Tier-K Smithsonian entry remains in source configuration,
+  so this page does not claim that it is currently supplying published
+  stories.
+</Callout>
 
 ## Admission into the pipeline
 

@@ -1,31 +1,31 @@
 ---
 title: "Infolitico"
-description: "Fully autonomous, faith-framed news: accurate reporting of today's events connected to Scripture, reflection, and prayer — a two-minute morning read."
+description: "Automated faith-framed news: source-backed reporting with a reflection and prayer; a curated verse appears when recommended."
 ---
 
 import { BookOpen, CircleHelp, Compass, Flame, Mail, Newspaper, Rss, ShieldCheck, Workflow } from 'lucide-react';
 
-Infolitico is a fully autonomous, faith-framed news site. Every article reports
-a real event from today's news cycle accurately, then connects it to a relevant
-Bible verse with a short spiritual reflection — a morning devotional that
-starts with today's headlines.
+Infolitico is a faith-framed news site. Its daily-news lane reports a real,
+source-backed event, then offers a spiritual reflection and prayer. A curated
+Bible verse appears only when the selector recommends one.
 
 <Warning>
-  Infolitico is fully automated end to end: sourcing, drafting, guarding, and
-  publishing run without human editorial writers. The pipeline protects source
-  provenance, exact curated Scripture text, and editorial safety before any
-  story can publish.
+  The default source implements an automated daily-news pipeline, from
+  source-event admission through publication, without human editorial writers
+  in that lane. A separate owner-gated script can publish a hand-authored
+  Inspirational Thought article; repository code does not establish which
+  publishing lanes are currently running in production.
 </Warning>
 
 <ProductPreview
   src="/screenshots/infolitico.png"
   alt="Infolitico landing page: the day's news headlines with faith-framed reflections and Scripture"
   accent="#5E0F1C"
-  caption="Each article leads with accurate reporting and carries a curated NLT verse, a reflection, and a prayer."
+  caption="The news pipeline connects source-backed events to reporting, an optional curated verse, reflection, and prayer."
   highlights={[
     { text: "Real events, reported accurately — sourced from a curated public feed diet.", icon: Newspaper },
-    { text: "A relevant Bible verse, reproduced exactly from the curated database.", icon: BookOpen },
-    { text: "A short reflection and prayer that connect the news to faith.", icon: Flame },
+    { text: "When recommended, a curated NLT verse is reproduced exactly.", icon: BookOpen },
+    { text: "A short reflection and prayer connect the news to faith.", icon: Flame },
   ]}
 />
 
@@ -34,7 +34,7 @@ starts with today's headlines.
     How to read Infolitico and what it is — and isn't.
   </Card>
   <Card icon={<Workflow />} title="How it works" href="/infolitico/how-it-works">
-    The autonomous pipeline from source event to published story.
+    The automated daily-news lane and the separate owner-gated hand-authored lane.
   </Card>
   <Card icon={<ShieldCheck />} title="Editorial standards" href="/infolitico/editorial-standards">
     Accuracy, Scripture integrity, and the safety gates.
@@ -43,9 +43,18 @@ starts with today's headlines.
     The curated feed diet and sourcing rules.
   </Card>
   <Card icon={<Mail />} title="Newsletter" href="/infolitico/newsletter">
-    The morning newsletter and daily rhythm.
+    Double-opt-in signup and sender implementation; one past timer run skipped an edition, but current digest delivery is unverified.
   </Card>
   <Card icon={<CircleHelp />} title="FAQ" href="/infolitico/faq">
     Reader questions about automation, faith framing, and accuracy.
+  </Card>
+  <Card icon={<Compass />} title="Reader guide" href="/infolitico/reader-guide">
+    Find the reading sections, story pages, people hubs, and archive.
+  </Card>
+  <Card icon={<Rss />} title="The Feed" href="/infolitico/the-feed">
+    Curated public Reddit snapshots and Infolitico-hosted discussion.
+  </Card>
+  <Card icon={<ShieldCheck />} title="Policies" href="/infolitico/policies">
+    AI disclosure, corrections, community standards, privacy, and terms.
   </Card>
 </Cards>

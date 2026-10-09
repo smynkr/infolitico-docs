@@ -13,8 +13,8 @@ requires reader sign-in to read or join a conversation.
    listed with their headlines.
 2. **Read the news first.** Each article leads with one or two factual
    paragraphs of straight reporting on a real current event.
-3. **Read the reflection.** The spiritual layer connects the event to a
-   relevant Bible verse and closes with a short prayer.
+3. **Read the reflection.** The spiritual layer connects the event to faith;
+   a curated Bible verse appears when the selector recommends one.
 4. **Share it.** The site is written for a reader who would pass a story to a
    friend in a church group chat or text it to a parent.
 
@@ -25,7 +25,7 @@ requires reader sign-in to read or join a conversation.
 | **Headline** | The event framed through a faith/values lens |
 | **Verse** | A Bible verse from the curated database, reproduced exactly (when the story warrants one) |
 | **The News** | 1–2 factual paragraphs, straight reporting |
-| **The Reflection** | 2–3 paragraphs connecting the event to the verse's teaching |
+| **The Reflection** | 2–3 paragraphs connecting the event to faith, with a verse when selected |
 | **Prayer** | A short closing prayer tied to the reflection |
 
 Articles run 300–500 words — about a two-minute read.
@@ -44,14 +44,15 @@ Articles run 300–500 words — about a two-minute read.
 
 ## Newsletter
 
-Prefer email? The morning newsletter is designed to deliver the day's stories
-to your inbox, but production digest delivery has not yet been activated. See
-the [newsletter guide](/infolitico/newsletter).
+Prefer email? The consent flow supports a double-opt-in digest. The source
+repository contains a sender and timer configuration, but production delivery
+is not verified. See the [newsletter guide](/infolitico/newsletter).
 
 <Warning>
-  Infolitico is fully automated. The pipeline's rejection behavior is
-  intentional: stories without a genuine faith connection are not published
-  rather than forced into a devotional frame.
+  The default source implements an automated daily-news lane. A separate
+  owner-gated hand-authored Inspirational Thought publishing script exists;
+  repository code does not establish which lane is currently running in
+  production.
 </Warning>
 
 ## Next steps

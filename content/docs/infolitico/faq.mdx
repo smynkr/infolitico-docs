@@ -8,9 +8,10 @@ import { Compass, ShieldCheck } from 'lucide-react';
 
 ## Is Infolitico written by humans?
 
-No. Infolitico is fully autonomous: sourcing, drafting, guarding, and
-publishing run without human editorial writers. The pipeline's safety gates
-are enforced in code and database policy, not by prompts.
+The default daily-news lane is automated from source-event admission through
+publication without human editorial writers. A separate owner-gated script
+supports hand-authored Inspirational Thought articles; source code alone does
+not establish which lane is currently running in production.
 
 ## How do I know the news is real?
 
@@ -22,10 +23,11 @@ rejected.
 
 ## How are Bible verses chosen?
 
-Deterministically. A SHA-256 hash of the source event's ID selects the verse
-index from the curated `bible_verses` database — the same event always yields
-the same verse. Verses are reproduced exactly from that database; the
-pipeline never fabricates or modifies Scripture text.
+When a verse is recommended, the selector hashes the source event ID to choose
+from the eligible curated `bible_verses` bucket. A default seven-day
+recent-use exclusion can change that bucket, so the same event is not
+guaranteed to select the same verse when its eligible set changes. Verses are
+reproduced exactly from the curated database.
 
 ## Do all articles include a verse?
 
@@ -57,8 +59,11 @@ No. Every story reports a real event that actually happened.
 
 ## How much does it cost?
 
-The site is free to read. The morning newsletter is available by subscribing
-on [infolitico.com](https://infolitico.com).
+The site is free to read. Newsletter signup uses double opt-in and sends a
+confirmation only when its provider is configured. The repository records one
+historical production timer run that skipped an edition; it does not establish
+the current schedule or any delivered digest. See the
+[newsletter guide](/infolitico/newsletter).
 
 <Cards>
   <Card icon={<Compass />} title="Get started" href="/infolitico/getting-started">
