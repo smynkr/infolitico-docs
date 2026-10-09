@@ -1,64 +1,83 @@
 ---
 title: "Editorial standards"
-description: "The hard rules Infolitico enforces: accurate reporting, exact Scripture text, no fabricated quotes, and protected-person policy — enforced in code, not prompts."
+description: "Editorial commitments, automated checks, and the limits of Infolitico's source and Scripture safeguards."
 ---
 
-Infolitico's editorial standards are not style guidelines — they are enforced
-rules. The enforcement lives in the pipeline's code and database policies, not
-in model prompts, so a careless or hostile model cannot talk its way past a
-safety rule.
+Infolitico's editorial standards combine editorial commitments with automated
+checks. Product code describes an automated source-event NEWS pipeline and a
+separate owner-gated publisher for hand-authored Inspirational Thoughts. These
+are distinct publishing paths; code and configuration do not establish which
+path is currently active in production or whether a message was delivered.
+Automated checks reduce risk for the patterns they recognize. They cannot prove
+that every claim is true, catch every fabricated or inaccurate quotation, or
+make publication infallible.
 
-## The hard rules
+## Editorial commitments and controls
 
-### 1. Never fabricate or modify Bible verse text
+### 1. Source-based reporting
 
-Every verse is reproduced **exactly** from the curated `bible_verses`
-database. The pipeline never writes a verse from memory, never paraphrases a
-quoted verse, and never edits the wording of a curated verse. The verified
-NLT block is the only full-verse quotation in an article.
+The automated NEWS pipeline begins with source events and applies evidence
+checks before later generation steps. It carries source information for
+provenance. This describes code behavior; it does not prove that a feed is
+reachable, an event has been published, or every published claim is correct.
 
-### 2. No fabricated quotes attributed as real
+### 2. Scripture when selected
 
-Commentary quotes are fetched from the `commentary_quotes` table and attached
-to the article **in code** between pipeline stages — the outline and draft
-models receive them as verified input and cannot emit their own quote text.
-At most one quote may appear in an article, verbatim and attributed.
+The NEWS pipeline selects verses from curated `bible_verses` data and carries
+the stored reference and text as canonical values. Publication guards reject
+detected changes to the selected verse and recognized unverified
+quotation-marked Scripture or Bible citations outside the leading verse
+block. These are bounded checks, not a guarantee that every reference,
+quotation, or generated claim is error-free.
 
-### 3. Protected people and minors are database-owned policy
+### 3. Source and commentary quotations
 
-Policy about protected people and minors is enforced by the database and the
-pipeline's code, not by asking a model to "remember the rules." A pre-publish
-person check runs before any story can publish.
+The pipeline supplies source and commentary quotations as input and checks the
+quotes selected for an outline against those supplied records. Quotation
+guards cover recognized forms; they are not a general fact-check of every
+sentence and do not prove that no fabricated quotation can pass.
 
-### 4. The last-line content gate
+### 4. Protected-person checks
 
-`polish-and-guard` is the final content gate before publication. Combined
-with editorial review, headline-novelty checks, and the pre-publish person
-check, a story must clear every gate or it is rejected — never patched by
-prompt.
+Product code includes checks against configured blocked persons, including a
+pre-publish check in the owner-gated Inspirational Thought publisher. These
+checks address the cases they recognize; they do not prove that every
+protected-person case is detectable or that a publishing path is currently
+active.
+
+### 5. Content gates
+
+The daily NEWS pipeline applies content scores, section requirements,
+quotation checks, and a 250–550-word polished-body bound. The separate
+owner-gated Thought publisher has its own validation, including a 700–900-word
+polished-body bound. Rejection is expected when an implemented gate fails;
+passing those checks is not independent verification of every fact.
 
 ## News first, faith second
 
-The article leads with accurate, concise reporting; the spiritual layer rides
-on top and never replaces it. The pipeline's source-evidence preflight rejects
-events that cannot be factually summarized, and the faith-angle stage rejects
-events with no genuine faith connection. A story is never forced into a
-devotional frame.
+The editorial intention is to lead with source-grounded reporting and add
+spiritual reflection where there is a genuine faith connection. Automated
+checks can reject candidates that fail their configured evidence or
+faith-angle tests, but cannot guarantee that every article meets this standard
+perfectly.
 
-## Voice, bounded
+## Editorial voice and length targets
 
 - **Warm and conversational** — a thoughtful friend sharing a morning
   devotional, not a pastor at a pulpit.
 - **Values, not politics** — family, personal responsibility, stewardship,
-  gratitude, character, community, and faith in God's plan. Never party
-  names, candidate endorsements, or left/right framing.
-- **Earnest and sincere** — no irony, no hedging, no academic distance.
-- **Short and accessible** — 300–500 words, a two-minute read.
+  gratitude, character, community, and faith in God's plan; no party
+  endorsements or left/right framing.
+- **Earnest, constructive, and dignifying** — treat people with care; avoid
+  mockery or humiliation.
+- **Short and accessible** — writing guidance targets 300–500 words for a
+  daily reflection. This is an editorial target, not the pipeline's exact
+  acceptance range or a publication guarantee.
 
 <Warning>
-  Rejection is the pipeline's primary safety mechanism. If a story cannot be
-  reported accurately, connected genuinely to faith, and cleared by every
-  gate, it is not published.
+  Automated checks are safeguards, not proof of infallibility. If you spot a
+  factual or Scripture error, see the [Corrections](https://infolitico.com/retractions)
+  page for how to report it.
 </Warning>
 
 <Cards>

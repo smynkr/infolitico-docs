@@ -1,28 +1,27 @@
 ---
 title: "Morning newsletter"
-description: "The Infolitico morning newsletter: its weekday cadence, source-backed content, consent flow, and published-edition archive."
+description: "Newsletter consent, sender implementation, and the boundary between checked-in schedule and verified delivery."
 ---
 
-The morning newsletter is designed to bring a short, faith-framed reading of
-the day's news to your inbox. It follows the same news-first, source-grounded
-approach as the site.
+The signup flow is double opt-in for an intended digest. The source repository
+contains a sender and daily timer configuration. A dated operations record
+documents one production timer run on 2026-08-16 that skipped an edition; it
+does not establish current scheduler/provider state or a delivered digest.
 
 ## Cadence and availability
 
-The confirmation email describes the morning email as a **weekday** message: a
-short faith-framed reflection on today's news, with accurate reporting grounded
-in Scripture. The signup panel describes the delivery as a concise digest of
-source-backed stories when the day has a truthful slate.
+Subscriber-facing confirmation copy describes a weekday email. The checked-in
+systemd timer is configured for a daily 06:00 America/Los_Angeles run. A dated
+operations record confirms one past run only, not the current schedule.
 
 Thin mornings are skipped rather than padded with filler. This means an empty
 or small slate is an intentional quality state, not a promise to send a
 made-up edition.
 
 <Warning>
-  The product source currently contains the consent, confirmation, and
-  unsubscribe foundation, but the production digest scheduler and digest
-  delivery have not been activated. A signup is not a guarantee that a
-  morning digest is currently being sent.
+  The source records a past timer run that skipped an edition, but does not
+  establish the current timer/provider state or that any digest was delivered.
+  Signing up is not a guarantee that a digest is being sent.
 </Warning>
 
 ## What goes in the digest
@@ -36,10 +35,8 @@ stories:
 - the published facts and Scripture reused as-is rather than rewritten by an
   email model.
 
-The confirmation message summarizes the experience as a short, faith-framed
-reflection on today's news. The web signup copy is more specific about the
-quality gate: if the day's slate is too thin to support a truthful digest, it
-is skipped.
+The sender skips a thin slate rather than padding it. Current production
+behavior cannot be established from the source snapshot and dated run record.
 
 ## Subscribe and manage consent
 
