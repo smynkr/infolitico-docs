@@ -22,6 +22,12 @@
       "current-state",
       "ledger"
     ],
+    "infolitico/getting-started.mdx": [
+      "ledger"
+    ],
+    "infolitico/how-it-works.mdx": [
+      "ledger"
+    ],
     "infolitico/index.mdx": [
       "current-state"
     ],
@@ -44,6 +50,8 @@
     "app/(home)/page.tsx": "0134cfaa45368774827f17f05e76232a15c88d15e48bb832a74a2748dc2c922d",
     "components/brand/products.ts": "a7999f3e364a0bbf01553e30e950ba7951eb3137e265ae0e2be85d6deee60c76",
     "docs.json": "911aee8b3ff7738e537d962adcb550cc22c4f4196806be9a3f7648bd8e556651",
+    "infolitico/getting-started.mdx": "23bc17508b2371da907029e6296b304a80bcf3050b97fa30e17ac9d057af656b",
+    "infolitico/how-it-works.mdx": "9fcddf0328ebd0a4db59977df9d8094b4b3a6d99ca14c024f36c6d555a99de21",
     "infolitico/index.mdx": "99f2afdc5b4f96d283858dd849ca92f90502a8af8971ca94a5423ea4f3b5f581",
     "next.config.mjs": "35f6ceca89e84deb1e13f145bef974f354e0081c6e5482a11bca1ef790f7b85c",
     "package.json": "e3faaf669b7f9b476e0210916434c5c4fd8dd829c316376321127e713943757a",
