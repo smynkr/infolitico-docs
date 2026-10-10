@@ -4,10 +4,16 @@ category: current-state
 updated: 2026-10-09
 summary: Dated durable facts and their source anchors
 nav_order: 130
-sources: [".codex/harness-memory.json", "README.md", "package.json", "next.config.mjs", "docs.json", "_migration/tools/lib/shared.mjs", "components/brand/products.ts", "public/logo.svg", "infolitico/getting-started.mdx", "infolitico/how-it-works.mdx"]
+sources: [".codex/harness-memory.json", "README.md", "package.json", "next.config.mjs", "docs.json", "_migration/tools/lib/shared.mjs", "components/brand/products.ts", "public/logo.svg", "infolitico/getting-started.mdx", "infolitico/how-it-works.mdx", "infolitico/policies.mdx", "infolitico/reader-guide.mdx"]
 ---
 
 # Durable ledger
+
+## 2026-10-09 — People subjects and AI-disclosure enforcement boundary
+
+- At Infolitico product commit [`d75e102`](https://github.com/smynkr/infolitico/commit/d75e1029b54d11f5a7b840765402ecf5276d4e5c), the People index describes public figures as covered by Infolitico; person hubs show related stories about those subjects, while story pages use the Infolitico Newsroom byline. Reader docs should not describe subjects as story authors (`apps/web/app/(reader)/people/page.tsx`, `person/[slug]/page.tsx`, and `story/[slug]/page.tsx`).
+- The product AI Disclosure states that guards reject examples including fabricated Scripture, partisan framing, prosperity-gospel language, and inaccurate sourcing. This is policy wording, not a complete technical guarantee: `packages/pipeline/steps/polish-and-guard.ts` and `scripture-quote-guard.ts` implement bounded checks for recognized patterns and do not prove every source or Scripture claim is error-free.
+- The standalone policy summary attributes those categories to the product disclosure and distinguishes them from the bounded checks. No product source, deployment, or active-delivery claim is changed.
 
 ## 2026-10-09 — Daily article target and polished-body guard
 

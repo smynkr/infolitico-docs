@@ -31,6 +31,12 @@
     "infolitico/index.mdx": [
       "current-state"
     ],
+    "infolitico/policies.mdx": [
+      "ledger"
+    ],
+    "infolitico/reader-guide.mdx": [
+      "ledger"
+    ],
     "next.config.mjs": [
       "current-state",
       "ledger"
@@ -53,6 +59,8 @@
     "infolitico/getting-started.mdx": "23bc17508b2371da907029e6296b304a80bcf3050b97fa30e17ac9d057af656b",
     "infolitico/how-it-works.mdx": "9fcddf0328ebd0a4db59977df9d8094b4b3a6d99ca14c024f36c6d555a99de21",
     "infolitico/index.mdx": "99f2afdc5b4f96d283858dd849ca92f90502a8af8971ca94a5423ea4f3b5f581",
+    "infolitico/policies.mdx": "11473cc5556616db009bb6a21bdff55359cc4cbe7e25292a21478d168206a38c",
+    "infolitico/reader-guide.mdx": "4805d5a561a9f39e726a7eccccc36fbe719e82caee0c6242bd2dc24d16b68422",
     "next.config.mjs": "35f6ceca89e84deb1e13f145bef974f354e0081c6e5482a11bca1ef790f7b85c",
     "package.json": "e3faaf669b7f9b476e0210916434c5c4fd8dd829c316376321127e713943757a",
     "public/logo.svg": "d49d81d23a92070939c0ee1eea828a9b94f5c3460aecb26b79c2e3a7e6e55941"
