@@ -1,0 +1,76 @@
+---
+title: "Content sources"
+description: "Where Infolitico's source events come from: a curated public feed diet with verified publisher URLs, and how events are admitted."
+---
+
+The checked-in `RSS_FEEDS` configuration combines direct publisher RSS/Atom
+feeds with Google News site and topic searches. It is a configuration
+snapshot, not evidence that every feed is reachable from the ingestion host
+or appears in the deployed edition.
+
+## Configured source families
+
+- **Wire-named sources:** AP and Reuters searches. These entries use Google
+  News site-search RSS, not direct AP or Reuters feeds.
+- **National and general news:** BBC, NPR, PBS NewsHour, CBS News, ABC News,
+  USA Today, and Axios.
+- **Business and technology:** Bloomberg, CNBC, The Wall Street Journal,
+  TechCrunch, The Verge, WIRED, Ars Technica, Fortune, Fast Company, Business
+  Insider, and The Information.
+- **Culture:** NPR Books, NPR Music, NPR Culture, Variety, The Hollywood
+  Reporter, and ArtNews.
+- **Local, regional, and international:** The Texas Tribune, CalMatters,
+  WBEZ, WBUR, WAMU, the Miami Herald, The Seattle Times, MinnPost, BBC World,
+  Deutsche Welle, France 24, and Al Jazeera.
+- **Faith, values, service, and public interest:** Christianity Today,
+  Religion News Service, Christian Post, WORLD Magazine, Deseret News,
+  Relevant, EWTN News, Baptist Press, CBN News, Christian Science Monitor,
+  Smithsonian, Live Science, World Vision, Direct Relief, Good News Network,
+  and Google News topic searches.
+
+<Warning>
+  Feed configuration is not live-health evidence. Merged
+  [PR #426](https://github.com/smynkr/infolitico/pull/426) recorded that the
+  ingestion host received a Cloudflare 403 from Smithsonian and had no
+  `source_events` from it; ArtNews was verified as a Culture replacement from
+  that host. The Tier-K Smithsonian entry remains in source configuration,
+  so this page does not claim that it is currently supplying published
+  stories.
+</Warning>
+## Admission into the pipeline
+
+An event is admitted only when it carries real factual evidence:
+
+- The source summary must be nonempty and more than the headline repeated.
+- Feed chrome (such as "submitted by …", link lists, or comment counts) is
+  never promoted into factual evidence.
+- Rows without sufficient evidence are rejected before any model work, so
+  junk rows never consume a generation slot.
+
+## Reader section routing
+
+Reader sections such as Nation, World, and Culture map to exact source labels
+from the feed registry. Section pages filter stories by those labels before
+paging, then apply the public image and person eligibility checks, so a
+higher-volume desk cannot crowd matching stories out of a lower-volume
+section.
+
+## Discovery URLs and verified publisher URLs
+
+The pipeline distinguishes between discovery URLs (where an event was found)
+and verified publisher URLs (the canonical article location). Provenance is
+carried through the pipeline so a published story's source is traceable.
+
+## The reader feed is separate from ingestion
+
+The public reader feed on the site is a publishing surface, not an ingestion
+source. Ingestion and publishing are deliberately separate paths.
+
+<Cards>
+  <Card title="How it works" icon="workflow" href="/infolitico/how-it-works">
+    What happens after a source event is admitted.
+  </Card>
+  <Card title="Editorial standards" icon="shield-check" href="/infolitico/editorial-standards">
+    The rules that govern what may be published.
+  </Card>
+</Cards>
