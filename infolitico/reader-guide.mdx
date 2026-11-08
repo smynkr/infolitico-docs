@@ -16,14 +16,14 @@ sign-in.
 | **Front Page** (`/`) | The current shared Infolitico edition. It is the homepage's canonical edition, with the latest story sections and the newsletter signup. |
 | **Faith & Church** (`/faith-church`) | Worship, ministry, and communities of faith shaping public life. Its topics include ministry, worship and practice, faith and public life, formation, and the global church. |
 | **Verse Index** (`/verse-index`) | The curated Bible verse library, organized by theme. A verse that appears in a published reflection links to its latest related story. |
-| **Thoughts** (`/thoughts`) | Longer, source-grounded reflections on the events of the day. Scripture appears when a natural connection is present, and the original source remains part of the reading. |
+| **Thoughts** (`/thoughts`) | Source-grounded reflections on real news events. Scripture appears when a natural connection is present, and the original source remains part of the reading. |
 | **Nation** (`/nation`) | Stories of communities, volunteers, and neighbors living out generosity across the country. |
 | **Business** (`/business`) | Stories of enterprise, innovation, and people stewarding resources while building for the future. |
 | **Culture** (`/culture`) | Books, films, music, technology, and the ideas that shape how believers see the world. |
 | **World** (`/world`) | International developments and stories that connect readers to communities and peoples around the world. |
 | **Politics** (`/politics`) | Government, public service, and the leaders shaping communities and the wider world. |
 | **The Feed** (`/feed`) | A bounded, verified snapshot of public Reddit conversations in curated faith, news, and civic communities. See the [Feed guide](/infolitico/the-feed). |
-| **Archive** (`/archive`) | Published editions listed by day. Each date links to that day's stories and story count. |
+| **Archive** (`/archive`) | Published editions listed by day. Each date links to that day's stories and story count, and each day page carries share controls and a print-friendly edition layout. |
 
 ## Story pages
 
@@ -35,11 +35,15 @@ A published story lives at `/story/[slug]`. The page can include:
 - an editorial image with its caption and available image attribution;
 - the story body;
 - the linked publisher source or source event;
-- share controls, a trust and provenance card, and related stories.
+- share and Save controls, a trust and provenance card, and related stories.
 
 A story keeps its source attribution visible when the page has a source
 headline. If a correction or retraction notice applies, the story route shows
 the editorial notice and links to the [corrections policy](/infolitico/policies#corrections-and-retractions).
+
+Stories you tap **Save** on are kept on your device in a reading list at
+`/saved`. Each entry shows when you saved it and the day the story was
+published; the list never leaves your browser.
 
 ## People hubs
 
@@ -47,6 +51,14 @@ The People index is available at `/people`. It lists public figures who appear i
 published Infolitico stories. Each person has a hub at `/person/[slug]` with the
 person's category, name, and latest related stories. The page is built around
 that person's published Infolitico coverage rather than a separate biography.
+
+## RSS feeds
+
+The whole site publishes a feed at `/feed.xml`. Each section desk also has its
+own feed at `/{section}/feed.xml` (for example `/politics/feed.xml`), and each
+person hub has one at `/person/[slug]/feed.xml`. Pages advertise their feeds
+with a standard RSS discovery link, so you can subscribe to a single desk or
+person instead of the whole site.
 
 ## Move through an edition
 
