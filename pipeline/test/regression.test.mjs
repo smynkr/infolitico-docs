@@ -951,6 +951,12 @@ test("an invalid primary API base is a configuration error, not a fallback trigg
   assert.match(result.stderr, /invalid API base/);
 });
 
+test("API backend refuses plain http to a non-loopback host before sending the key", async () => {
+  const result = await runApiBackend("glm", { type: "api", apiBase: "http://example.test/v1", model: "m", apiKey: "k-http", maxTokens: 10 }, "p", 1000);
+  assert.notEqual(result.code, 0);
+  assert.match(result.stderr, /invalid API base/);
+});
+
 test("workflow template keeps the stable hosted check name and token split", () => {
   const template = readFileSync(path.resolve(testDir, "..", "docs-agent.yml"), "utf8");
   assert.match(template, /name:\s+hosted \(GLM 5\.2 — drafts doc update\)/);

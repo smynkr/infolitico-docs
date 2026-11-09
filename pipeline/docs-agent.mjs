@@ -866,7 +866,7 @@ async function requestApiBackend(backendName, backend, prompt, timeoutMs, deadli
       stderr: `API backend "${backendName}" exhausted its ${timeoutMs}ms timeout budget`,
       timedOut: true, fallbackEligible: true,
     });
-    try { const u = new URL(backend.apiBase); if (!["http:", "https:"].includes(u.protocol) || u.username || u.password) throw new Error("base"); } catch {
+    try { const u = new URL(backend.apiBase); if (!(u.protocol === "https:" || (u.protocol === "http:" && ["127.0.0.1", "localhost", "[::1]"].includes(u.hostname))) || u.username || u.password) throw new Error("base"); } catch {
       return { code: -1, signal: null, stdout: "", stderr: `API backend "${backendName}" has an invalid API base`, timedOut: false, fallbackEligible: false };
     }
     for (let attempt = 0; attempt < requestAttempts; attempt += 1) {
