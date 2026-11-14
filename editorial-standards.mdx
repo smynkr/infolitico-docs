@@ -1,0 +1,102 @@
+---
+title: "Editorial standards"
+description: "Editorial commitments, automated checks, and the limits of Infolitico's source and Scripture safeguards."
+---
+
+Infolitico's editorial standards combine editorial commitments with automated
+checks. Product code describes an automated source-event NEWS pipeline and a
+separate owner-gated publisher for hand-authored Inspirational Thoughts. These
+are distinct publishing paths; code and configuration do not establish which
+path is currently active in production or whether a message was delivered.
+Automated checks reduce risk for the patterns they recognize. They cannot prove
+that every claim is true, catch every fabricated or inaccurate quotation, or
+make publication infallible.
+
+## Editorial commitments and controls
+
+### 1. Source-based reporting
+
+The automated NEWS pipeline begins with source events and applies evidence
+checks before later generation steps. It carries source information for
+provenance. This describes code behavior; it does not prove that a feed is
+reachable, an event has been published, or every published claim is correct.
+
+### 2. Scripture when selected
+
+The NEWS pipeline selects verses from curated `bible_verses` data and carries
+the stored reference and text as canonical values. Publication guards reject
+detected changes to the selected verse and recognized unverified
+quotation-marked Scripture or Bible citations outside the leading verse
+block. These are bounded checks, not a guarantee that every reference,
+quotation, or generated claim is error-free.
+
+### 3. Source and commentary quotations
+
+The pipeline supplies source and commentary quotations as input and checks the
+quotes selected for an outline against those supplied records. Quotation
+guards cover recognized forms; they are not a general fact-check of every
+sentence and do not prove that no fabricated quotation can pass.
+
+### 4. Protected-person checks
+
+Product code includes checks against configured blocked persons, including a
+pre-publish check in the owner-gated Inspirational Thought publisher. The
+standards also bar stories centered on minors or named crime victims and
+exclude named ongoing-litigation parties, with a narrow exception for sitting
+or former senior public officials reported for acts in or arising from office:
+allegations must stay attributed as allegations, any source-reported denial
+must be carried, and no headline, reflection, prayer, or Scripture pairing may
+assert or imply guilt. These checks and prompts address the cases they
+recognize; they do not prove that every protected-person case is detectable or
+that a publishing path is currently active.
+
+### 5. Content gates
+
+The daily NEWS pipeline applies content scores, section requirements,
+quotation checks, a 50-word factual floor on the News summary, and a
+250–550-word polished-body bound. A deterministic check keeps party labels out
+of the headline, subheadline, reflection, and prayer; neutral factual labels
+remain permitted only inside the News summary. A short allowlist of repairable
+defects — for example an out-of-bounds length — receives one bounded repair
+attempt before a final rejection. The separate owner-gated Thought publisher
+has its own validation, including a 700–900-word polished-body bound. Rejection
+is expected when an implemented gate fails; passing those checks is not
+independent verification of every fact.
+
+## News first, faith second
+
+The editorial intention is to lead with source-grounded reporting and add
+spiritual reflection where there is a genuine faith connection. Automated
+checks can reject candidates that fail their configured evidence or
+faith-angle tests, but cannot guarantee that every article meets this standard
+perfectly.
+
+## Editorial voice and length targets
+
+- **Warm and conversational** — a thoughtful friend sharing a morning
+  devotional, not a pastor at a pulpit.
+- **Values, not politics** — family, personal responsibility, stewardship,
+  gratitude, character, community, and faith in God's plan; no party
+  endorsements, no left/right framing, and no party labels outside neutral
+  factual context in the News summary — never in the headline, reflection, or
+  prayer.
+- **Earnest, constructive, and dignifying** — treat people with care; avoid
+  mockery or humiliation, regardless of who is in the news.
+- **Short and accessible** — writing guidance targets 300–500 words for a
+  daily reflection. This is an editorial target, not the pipeline's exact
+  acceptance range or a publication guarantee.
+
+<Warning>
+  Automated checks are safeguards, not proof of infallibility. If you spot a
+  factual or Scripture error, see the [Corrections](https://infolitico.com/retractions)
+  page for how to report it.
+</Warning>
+
+<Cards>
+  <Card title="How it works" icon="workflow" href="/infolitico/how-it-works">
+    Where each rule is enforced in the pipeline.
+  </Card>
+  <Card title="FAQ" icon="circle-help" href="/infolitico/faq">
+    Reader questions about accuracy and automation.
+  </Card>
+</Cards>
