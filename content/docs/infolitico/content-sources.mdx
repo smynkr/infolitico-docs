@@ -6,30 +6,45 @@ description: "Where Infolitico's source events come from: a curated public feed
 
 import { ShieldCheck, Workflow } from 'lucide-react';
 
-The checked-in `RSS_FEEDS` configuration combines direct publisher RSS/Atom
-feeds with Google News site and topic searches. It is a configuration
-snapshot, not evidence that every feed is reachable from the ingestion host
-or appears in the deployed edition.
+The checked-in `RSS_FEEDS` configuration is a diet of direct publisher
+RSS/Atom feeds. Since November 2026 no entry is routed through Google News:
+former Google News site-search and topic entries now either use their
+publisher's own feed or have been retired. It is a configuration snapshot,
+not evidence that every feed is reachable from the ingestion host or appears
+in the deployed edition — the watcher picks up a changed feed list only
+after a redeploy.
 
 ## Configured source families
 
-- **Wire-named sources:** AP and Reuters searches. These entries use Google
-  News site-search RSS, not direct AP or Reuters feeds.
 - **National and general news:** BBC, NPR, PBS NewsHour, CBS News, ABC News,
   USA Today, and Axios.
 - **Business and technology:** Bloomberg, CNBC, The Wall Street Journal,
-  TechCrunch, The Verge, WIRED, Ars Technica, Fortune, Fast Company, Business
-  Insider, and The Information.
+  TechCrunch, The Verge, WIRED, Ars Technica, Fortune, and Fast Company.
 - **Culture:** NPR Books, NPR Music, NPR Culture, Variety, The Hollywood
   Reporter, and ArtNews.
 - **Local, regional, and international:** The Texas Tribune, CalMatters,
-  WBEZ, WBUR, WAMU, the Miami Herald, The Seattle Times, MinnPost, BBC World,
-  Deutsche Welle, France 24, and Al Jazeera.
+  WBEZ, WBUR, WAMU, MinnPost, BBC World, Deutsche Welle, France 24, and
+  Al Jazeera.
 - **Faith, values, service, and public interest:** Christianity Today,
   Religion News Service, Christian Post, WORLD Magazine, Deseret News,
-  Relevant, EWTN News, Baptist Press, CBN News, Christian Science Monitor,
-  Smithsonian, Live Science, World Vision, Direct Relief, Good News Network,
-  and Google News topic searches.
+  Relevant, EWTN News, Christian Science Monitor, Smithsonian, Live Science,
+  World Vision, Direct Relief, and Good News Network.
+
+<Callout>
+  A November 2026 diet change
+  ([PR #490](https://github.com/smynkr/infolitico/pull/490)) moved ten
+  Google-News-routed sources to their publishers' own feeds under the same
+  source keys and retired the rest: the AP and Reuters wire searches,
+  Business Insider, The Information, the Miami Herald, The Seattle Times,
+  Baptist Press, CBN News, and every Google News topic search. AP and
+  Reuters cannot be fetched within policy — Reuters' robots.txt disallows
+  generic crawlers and AP serves a bot challenge — and Google News summaries
+  repeated only the headline, so such rows could never pass the admission
+  bar below. The other retirements had no feed the watcher could use, or
+  were a poor fit for the diet (paywalled or whole-site-only feeds). Retired
+  keys may still appear inertly in a few configuration files; they produce
+  no new source events.
+</Callout>
 
 <Callout type="warn">
   Feed configuration is not live-health evidence. Merged
@@ -56,6 +71,9 @@ An event is admitted only when it carries real factual evidence:
 The pipeline distinguishes between discovery URLs (where an event was found)
 and verified publisher URLs (the canonical article location). Provenance is
 carried through the pipeline so a published story's source is traceable.
+Under the all-publisher diet, new events arrive with the publisher's own URL
+from the start; the URL resolver still settles events that were discovered
+earlier through Google News redirects.
 
 ## The reader feed is separate from ingestion
 
